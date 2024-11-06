@@ -23,9 +23,19 @@ A binary tree is a hierarchical data structure that consists of nodes, where eac
    - **Complete Binary Tree**: All levels of the tree are fully filled except possibly for the last level, which is filled from left to right.
    - **Perfect Binary Tree**: All internal nodes have two children, and all leaf nodes are at the same level.
    - **Binary Search Tree (BST)**: A binary tree that maintains a specific order, where the left child’s value is less than the parent node’s value, and the right child’s value is greater.
+   - **Balanced Binary Tree**: A binary tree where the height difference between the left and right subtrees for every node is at most one.
+     - **Types of Balanced Trees**:
+       - **AVL Tree**: A self-balancing BST where the heights of the two child subtrees of any node differ by no more than one.
+       - **Red-Black Tree**: A balanced BST that maintains balance using color properties, allowing efficient insertion and deletion.
+   - **Splay Tree**: A self-adjusting binary search tree with the property that recently accessed elements are quick to access again.
+   - **Treap**: A combination of a binary search tree and a heap. It maintains the BST properties while ensuring heap properties based on priorities assigned to nodes.
+   - **Segment Tree**: A binary tree used for storing intervals or segments, allowing querying which segments overlap with a given point.
+   - **Fenwick Tree (Binary Indexed Tree)**: A data structure that provides efficient methods for calculating prefix sums and updating elements in an array.
+   - **B-Trees and B+ Trees**: Generalized search trees that allow more than two children per node, primarily used in databases and file systems.
 
 The binary tree is a foundational data structure widely used in various algorithms, such as searching and sorting, as well as in applications like expression parsing and hierarchical data representation.
 """
+
 
 # Class Node for storing value and children nodes
 class Node:
