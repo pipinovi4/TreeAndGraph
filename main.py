@@ -1,5 +1,6 @@
 from FullBinaryTrees.full_binary_tree import FullBinaryTree
 from CompleteBinaryTrees.complete_binary_tree import CompleteBinaryTree
+from PerfectBinaryTrees.perfect_binary_tree import PerfectBinaryTree
 
 if __name__ == "__main__":
     # ---------------- Full Binary Tree Example ---------------- #
@@ -46,3 +47,17 @@ if __name__ == "__main__":
     # Perform search operations on CompleteBinaryTree
     print("\nIs number \"5\" in Complete Binary Tree:", complete_binary_tree.search(5))  # Expected output: True
     print("Is number \"7\" in Complete Binary Tree:", complete_binary_tree.search(7))  # Expected output: False
+
+    # ---------------- Perfect Binary Tree Example ---------------- #
+    print("\nPerfect Binary Tree:")
+    depth = 3  # Depth of the perfect binary tree
+
+    perfect_binary_tree = PerfectBinaryTree(depth)  # Initialize PerfectBinaryTree
+
+    # Print the populated PerfectBinaryTree
+    print("Fully populated Perfect Binary Tree:", end=" ")
+    perfect_binary_tree.print_tree(perfect_binary_tree.root)  # Expected output: 1 2 3 4 5 6 7
+
+    # Perform search operations on PerfectBinaryTree
+    print("\nIs number \"5\" in Perfect Binary Tree:", perfect_binary_tree.search(perfect_binary_tree.root, 5))  # Expected output: True
+    print("Is number \"8\" in Perfect Binary Tree:", perfect_binary_tree.search(perfect_binary_tree.root, 8))  # Expected output: False

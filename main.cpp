@@ -1,5 +1,6 @@
 #include "FullBinaryTrees/full_binary_tree.h"
 #include "CompleteBinaryTrees/complete_binary_tree.h"
+#include "PerfectBinaryTrees/perfect_binary_tree.h"
 #include <iostream>
 
 int main() {
@@ -39,7 +40,7 @@ int main() {
     // Initialize the CompleteBinaryTree
     CompleteBinaryTree completeBinaryTree;
 
-    // 2. Insert nodes in level-order to maintain complete binary tree properties
+    // Insert nodes in level-order to maintain complete binary tree properties
     completeBinaryTree.insert(1);  // Insert root node
     completeBinaryTree.insert(2);  // Inserts as left child of root
     completeBinaryTree.insert(3);  // Inserts as right child of root
@@ -57,6 +58,26 @@ int main() {
 
     std::cout << "Does number \"7\" exist in the Complete Binary Tree: "
               << (completeBinaryTree.search(7) ? "True" : "False") << std::endl;
+
+    // ---------------- Perfect Binary Tree Example ---------------- //
+    std::cout << "\nPerfect Binary Tree:\n";
+
+    // Initialize PerfectBinaryTree with sample data and depth
+    const std::vector<int> perfectData = {1, 2, 3, 4, 5, 6, 7};  // Sample data for the perfect binary tree
+    constexpr int perfectDepth = 3;  // Depth of the perfect binary tree
+
+    const PerfectBinaryTree perfectBinaryTree(perfectData, perfectDepth);  // Create PerfectBinaryTree instance
+
+    // Print the populated Perfect Binary Tree
+    std::cout << "Fully populated Perfect Binary Tree: ";
+    PerfectBinaryTree::printTree(perfectBinaryTree.root);  // Expected output: 1 2 3 4 5 6 7
+
+    // Perform search operations on PerfectBinaryTree
+    std::cout << "\nDoes number \"5\" exist in the Perfect Binary Tree: "
+              << (PerfectBinaryTree::search(perfectBinaryTree.root, 5) ? "True" : "False") << std::endl;  // Expected output: True
+
+    std::cout << "Does number \"8\" exist in the Perfect Binary Tree: "
+              << (PerfectBinaryTree::search(perfectBinaryTree.root, 8) ? "True" : "False") << std::endl;  // Expected output: False
 
     return 0;
 }
