@@ -1,6 +1,7 @@
 from FullBinaryTrees.full_binary_tree import FullBinaryTree
 from CompleteBinaryTrees.complete_binary_tree import CompleteBinaryTree
 from PerfectBinaryTrees.perfect_binary_tree import PerfectBinaryTree
+from BinarySearchTrees.binary_search_tree import BinarySearchTree
 
 if __name__ == "__main__":
     # ---------------- Full Binary Tree Example ---------------- #
@@ -61,3 +62,20 @@ if __name__ == "__main__":
     # Perform search operations on PerfectBinaryTree
     print("\nIs number \"5\" in Perfect Binary Tree:", perfect_binary_tree.search(perfect_binary_tree.root, 5))  # Expected output: True
     print("Is number \"8\" in Perfect Binary Tree:", perfect_binary_tree.search(perfect_binary_tree.root, 8))  # Expected output: False
+
+    # ---------------- Binary Search Tree Example ---------------- #
+    print("\nBinary Search Tree:")
+    bst = BinarySearchTree()  # Initialize the Binary Search Tree
+
+    # Insert values into the Binary Search Tree
+    values_to_insert = [5, 3, 7, 2, 4, 6, 8]
+    for value in values_to_insert:
+        bst.insert(value)  # Insert each value
+
+    # Print the Binary Search Tree using in-order traversal
+    print("In-order traversal of the Binary Search Tree: ", end="")
+    bst.print_tree(bst.root)  # Expected output: 2 3 4 5 6 7 8
+
+    # Perform search operations on Binary Search Tree
+    print("\nIs number \"4\" in Binary Search Tree:", bst.search(4))  # Expected output: True
+    print("Is number \"9\" in Binary Search Tree:", bst.search(9))  # Expected output: False
