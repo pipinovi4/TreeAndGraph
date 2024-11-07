@@ -1,0 +1,30 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4  # Use the latest checkout action to fetch your repository
+
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y build-essential
+
+    - name: Configure project
+      run: ./configure  # Assuming you have a configure script in your project root
+
+    - name: Build project
+      run: make
+
+    - name: Run tests
+      run: make check  # Assuming you have tests defined with make check
+
+    - name: Distribution check
+      run: make distcheck  # Verifies the distribution tarball, if you have this configured
