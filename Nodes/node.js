@@ -1,17 +1,24 @@
+/**
+ * Class representing a node in a binary tree.
+ * Each node stores a data value and has references to left and right child nodes.
+ */
 class Node {
     /**
      * Creates a new node with the specified data.
-     * @param {any} data - The value to be stored in the node.
+     *
+     * @param {any} data - The value to be stored in the node. Can be any data type.
      */
     constructor(data) {
-        this.data = data; // Store the value of the node
+        this.data = data; // Store the value in the node
 
-        // Initialize left child as null
-        // This will later hold a reference to the left child node, if it exists.
+        // Initialize left child as null (no left child initially)
+        // This will hold a reference to the left child node, if assigned later.
         this.left = null;
 
-        // Initialize right child as null
-        // This will later hold a reference to the right child node, if it exists.
+        // Initialize right child as null (no right child initially)
+        // This will hold a reference to the right child node, if assigned later.
         this.right = null;
     }
 }
+
+module.exports = Node;
