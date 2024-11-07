@@ -2,11 +2,24 @@ const Node = require("../Nodes/node"); // Import the Node class to represent eac
 
 class PerfectBinaryTree {
     constructor(depth) {
+        /**
+         * Initializes a PerfectBinaryTree instance with a specified depth.
+         *
+         * @param {number} depth - The depth of the perfect binary tree.
+         * The tree will have 2^depth - 1 nodes.
+         */
         this.root = this.buildPerfectTree(1, depth); // Initialize the tree with the specified depth
     }
 
     // Recursively builds a perfect binary tree
     buildPerfectTree(data, depth) {
+        /**
+         * Recursively constructs a perfect binary tree.
+         *
+         * @param {number} data - The value for the current node.
+         * @param {number} depth - The remaining depth of the tree to be constructed.
+         * @returns {Node|null} - Returns the newly created node or null if depth is zero.
+         */
         if (depth === 0) {
             return null; // Return null if the depth is zero (base case)
         }
@@ -20,6 +33,13 @@ class PerfectBinaryTree {
 
     // Searches for a target value in the tree using pre-order traversal
     search(node, target) {
+        /**
+         * Searches for a target value in the tree using pre-order traversal.
+         *
+         * @param {Node|null} node - The current node being examined.
+         * @param {number} target - The value to search for in the tree.
+         * @returns {boolean} - Returns true if the target is found, false otherwise.
+         */
         if (node === null) {
             return false; // Return false if the node is null
         }
@@ -31,6 +51,11 @@ class PerfectBinaryTree {
     }
 
     printTree(node) {
+        /**
+         * Prints the tree using pre-order traversal.
+         *
+         * @param {Node|null} node - The starting node for the traversal (usually the root).
+         */
         const values = []; // Array to store node values
 
         /**
