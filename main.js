@@ -2,6 +2,7 @@ const FullBinaryTree = require('./FullBinaryTrees/full_binary_tree');
 const CompleteBinaryTree = require('./CompleteBinaryTrees/complete_binary_tree');
 const PerfectBinaryTree = require('./PerfectBinaryTrees/perfect_binary_tree');
 const BinarySearchTree = require("./BinarySearchTrees/binary_search_tree")
+const AVLTree = require("./AVLTree/avl_tree");
 
 console.log("Full Binary Tree:");
 
@@ -89,3 +90,28 @@ BinarySearchTree.printTree(bst.root);  // Expected output: 2 3 4 5 6 7 8
 // Perform search operations on Binary Search Tree
 console.log(`\nDoes number "4" exist in the Binary Search Tree? ${bst.search(4)}`);  // Expected output: true
 console.log(`Does number "9" exist in the Binary Search Tree? ${bst.search(9)}`);  // Expected output: false
+
+console.log("\nAVL Tree:");
+
+// ---------------- AVL Tree Example ---------------- //
+
+// Initialize the AVL Tree
+const avlTree = new AVLTree();
+
+// Insert values into the AVL Tree
+const avlValuesToInsert = [15, 10, 20, 5, 12, 16, 25, 30, 6];  // Example values to insert into the AVL tree
+avlValuesToInsert.forEach(value => avlTree.insert(value));  // Insert each value into the AVL tree
+
+// Print the AVL Tree using in-order traversal (should be sorted due to AVL properties)
+console.log("In-order traversal of the AVL Tree (balanced):");
+avlTree.printInOrder();  // Expected output: 5 6 10 12 15 16 20 25 30
+
+// Perform search operations on AVL Tree
+console.log(`\nDoes number "15" exist in the AVL Tree? ${avlTree.search(15)}`);  // Expected output: true
+console.log(`Does number "40" exist in the AVL Tree? ${avlTree.search(40)}`);  // Expected output: false
+
+// Perform delete operation on AVL Tree
+avlTree.delete(15);
+console.log("\nIn-order traversal after deleting 15:");
+avlTree.printInOrder();  // Expected output: 5 6 10 12 16 20 25 30 (15 should be removed)
+
