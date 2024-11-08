@@ -12,9 +12,10 @@
  */
 class Node {
 public:
-    int data;   ///< The data value stored in the node.
-    Node* left; ///< Pointer to the left child node.
-    Node* right; ///< Pointer to the right child node.
+    int data;        ///< The data value stored in the node.
+    Node* left;      ///< Pointer to the left child node.
+    Node* right;     ///< Pointer to the right child node.
+    size_t height{}; ///< Counter height of the node inside tree
 
     /**
      * @brief Constructor to initialize a node with a given value.
@@ -24,7 +25,7 @@ public:
      * 
      * @param value An integer value to initialize the node's data.
      */
-    explicit Node(int value);
+    explicit inline Node(int value);
 };
 
 #include "node.tpp"
