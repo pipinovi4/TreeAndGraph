@@ -1,6 +1,7 @@
 const FullBinaryTree = require('./FullBinaryTrees/full_binary_tree');
 const CompleteBinaryTree = require('./CompleteBinaryTrees/complete_binary_tree');
 const PerfectBinaryTree = require('./PerfectBinaryTrees/perfect_binary_tree');
+const BinarySearchTree = require("./BinarySearchTrees/binary_search_tree")
 
 console.log("Full Binary Tree:");
 
@@ -69,3 +70,22 @@ perfectBinaryTree.printTree(perfectBinaryTree.root);  // Expected output: 1 2 3 
 // Perform search operations on PerfectBinaryTree
 console.log(`\nDoes number "5" exist in the Perfect Binary Tree? ${perfectBinaryTree.search(perfectBinaryTree.root, 5)}`);  // Expected output: true
 console.log(`Does number "8" exist in the Perfect Binary Tree? ${perfectBinaryTree.search(perfectBinaryTree.root, 8)}`);  // Expected output: false
+
+console.log("\nBinary Search Tree:");
+
+// ---------------- Binary Search Tree Example ---------------- //
+
+// Initialize the Binary Search Tree
+const bst = new BinarySearchTree();  // Create a new Binary Search Tree
+
+// Insert values into the Binary Search Tree
+const valuesToInsert = [5, 3, 7, 2, 4, 6, 8];  // Example values to insert into the BST
+valuesToInsert.forEach(value => bst.insert(value));  // Insert each value into the BST
+
+// Print the Binary Search Tree using in-order traversal
+console.log("In-order traversal of the Binary Search Tree: ", end="");
+BinarySearchTree.printTree(bst.root);  // Expected output: 2 3 4 5 6 7 8
+
+// Perform search operations on Binary Search Tree
+console.log(`\nDoes number "4" exist in the Binary Search Tree? ${bst.search(4)}`);  // Expected output: true
+console.log(`Does number "9" exist in the Binary Search Tree? ${bst.search(9)}`);  // Expected output: false
