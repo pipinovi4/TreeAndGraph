@@ -1,6 +1,7 @@
 #include "FullBinaryTrees/full_binary_tree.h"
 #include "CompleteBinaryTrees/complete_binary_tree.h"
 #include "PerfectBinaryTrees/perfect_binary_tree.h"
+#include "BinarySearchTrees/binary_search_tree.h"
 #include <iostream>
 
 int main() {
@@ -78,6 +79,41 @@ int main() {
 
     std::cout << "Does number \"8\" exist in the Perfect Binary Tree: "
               << (PerfectBinaryTree::search(perfectBinaryTree.root, 8) ? "True" : "False") << std::endl;  // Expected output: False
+
+    // ---------------- Binary Search Tree Example ---------------- //
+    std::cout << "\nBinary Search Tree:\n";
+
+    BinarySearchTree binarySearchTree;
+
+    // Insert elements into the BST
+    binarySearchTree.insert(15);
+    binarySearchTree.insert(10);
+    binarySearchTree.insert(20);
+    binarySearchTree.insert(8);
+    binarySearchTree.insert(12);
+    binarySearchTree.insert(17);
+    binarySearchTree.insert(25);
+
+    // Print the Binary Search Tree
+    std::cout << "Binary Search Tree after insertions: ";
+    binarySearchTree.print_tree(); // Expected in-order output: 8 10 12 15 17 20 25
+
+    // Perform search operations on BinarySearchTree
+    std::cout << "\nDoes number \"10\" exist in the Binary Search Tree: "
+              << (binarySearchTree.search(10) ? "True" : "False") << std::endl;  // Expected output: True
+
+    std::cout << "Does number \"30\" exist in the Binary Search Tree: "
+              << (binarySearchTree.search(30) ? "True" : "False") << std::endl;  // Expected output: False
+
+    // Remove a node from the BST
+    binarySearchTree.remove(10);
+    std::cout << "Binary Search Tree after removing \"10\": ";
+    binarySearchTree.print_tree(); // Expected in-order output: 8 12 15 17 20 25
+
+    // Remove another node
+    binarySearchTree.remove(15);
+    std::cout << "Binary Search Tree after removing \"15\": ";
+    binarySearchTree.print_tree(); // Expected in-order output: 8 12 17 20 25
 
     return 0;
 }
