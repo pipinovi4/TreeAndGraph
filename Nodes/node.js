@@ -19,7 +19,7 @@ class Node {
         // This will hold a reference to the right child node, if assigned later.
         this.right = null;
 
-        // Initialized counter height of the node inside tree
+        // Initialized counter height of the node
         this.height = 1;
     }
 }

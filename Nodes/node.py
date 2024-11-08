@@ -13,4 +13,4 @@ class Node:
         self.data = data         # Set the node's data to the provided value
         self.left = None         # Initialize the left child as None (no child yet)
         self.right = None        # Initialize the right child as None (no child yet)
-        self.height = 1          # Initialize of the height of node
+        self.height = 1          # Initialize height of node
