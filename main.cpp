@@ -2,6 +2,7 @@
 #include "CompleteBinaryTrees/complete_binary_tree.h"
 #include "PerfectBinaryTrees/perfect_binary_tree.h"
 #include "BinarySearchTrees/binary_search_tree.h"
+#include "AVLTree/avl_tree.h"
 #include <iostream>
 
 int main() {
@@ -115,5 +116,43 @@ int main() {
     std::cout << "Binary Search Tree after removing \"15\": ";
     binarySearchTree.print_tree(); // Expected in-order output: 8 12 17 20 25
 
-    return 0;
+    // ---------------- AVL Tree Example ---------------- //
+    std::cout << "\nAVL Tree:\n";
+
+    // Initialize the AVL Tree
+    AVLTree avlTree;
+
+    // Insert elements into the AVL Tree
+    avlTree.insert(30);
+    avlTree.insert(20);
+    avlTree.insert(40);
+    avlTree.insert(10);
+    avlTree.insert(25);
+    avlTree.insert(35);
+    avlTree.insert(50);
+
+    // Print the AVL Tree in in-order (should be sorted if balanced correctly)
+    std::cout << "AVL Tree after insertions (in-order): ";
+    avlTree.printInOrder(); // Expected in-order output: 10 20 25 30 35 40 50
+
+    // Perform search operations on AVLTree
+    std::cout << "\nDoes number \"25\" exist in the AVL Tree: "
+              << (avlTree.search(25) ? "True" : "False") << std::endl;  // Expected output: True
+
+    std::cout << "Does number \"15\" exist in the AVL Tree: "
+              << (avlTree.search(15) ? "True" : "False") << std::endl;  // Expected output: False
+
+    // Delete a node and check balance
+    avlTree.remove(25);
+    std::cout << "AVL Tree after removing \"25\": ";
+    avlTree.printInOrder(); // Expected in-order output: 10 20 30 35 40 50
+
+    // Delete additional nodes to test tree balancing
+    avlTree.remove(30);
+    std::cout << "AVL Tree after removing \"30\": ";
+    avlTree.printInOrder(); // Expected in-order output: 10 20 35 40 50
+
+    avlTree.remove(40);
+    std::cout << "AVL Tree after removing \"40\": ";
+    avlTree.printInOrder(); // Expected in-order output: 10 20 35 50
 }
