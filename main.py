@@ -3,6 +3,7 @@ from CompleteBinaryTrees.complete_binary_tree import CompleteBinaryTree
 from PerfectBinaryTrees.perfect_binary_tree import PerfectBinaryTree
 from BinarySearchTrees.binary_search_tree import BinarySearchTree
 from AVLTree.avl_tree import AVLTree
+from BTrees.b_tree import BTree
 
 if __name__ == "__main__":
     # ---------------- Full Binary Tree Example ---------------- #
@@ -91,3 +92,35 @@ if __name__ == "__main__":
     avl_tree.delete(15)
     print("In-order traversal after deleting 15:", end=" ")
     avl_tree.print_in_order()  # Expected output: 5 6 10 16 20 25 30
+
+    # ---------------- B-Tree Example ---------------- #
+    print("\n\nB-Tree:")
+    # Initialize BTree with minimum degree t=2
+    b_tree = BTree(2)
+
+    # Insert values into the B-Tree
+    b_tree_values = [10, 20, 5, 6, 15, 30, 25, 16, 2, 12]
+    for value in b_tree_values:
+        b_tree.insert(value)
+
+    # Print the B-Tree structure (in-order traversal)
+    print("In-order traversal of the B-Tree:", end=" ")
+    b_tree.print_tree()
+
+    # Perform search operations on B-Tree
+    print("\nIs number \"15\" in B-Tree:", b_tree.search(15))  # Expected output: True
+    print("Is number \"40\" in B-Tree:", b_tree.search(40))    # Expected output: False
+
+    # Delete a value from the B-Tree and check structure
+    b_tree.remove(15)
+    print("\nIn-order traversal after deleting 15:", end=" ")
+    b_tree.print_tree()  # Expected to no longer include 15
+
+    # Delete additional values to observe tree restructuring
+    b_tree.remove(10)
+    print("\nIn-order traversal after deleting 10:", end=" ")
+    b_tree.print_tree()
+
+    b_tree.remove(5)
+    print("\nIn-order traversal after deleting 5:", end=" ")
+    b_tree.print_tree()
