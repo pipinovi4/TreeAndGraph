@@ -3,6 +3,7 @@ const CompleteBinaryTree = require('./CompleteBinaryTrees/complete_binary_tree')
 const PerfectBinaryTree = require('./PerfectBinaryTrees/perfect_binary_tree');
 const BinarySearchTree = require("./BinarySearchTrees/binary_search_tree")
 const AVLTree = require("./AVLTree/avl_tree");
+const BTree = require("./BTrees/b_tree");
 
 console.log("Full Binary Tree:");
 
@@ -115,3 +116,33 @@ avlTree.delete(15);
 console.log("\nIn-order traversal after deleting 15:");
 avlTree.printInOrder();  // Expected output: 5 6 10 12 16 20 25 30 (15 should be removed)
 
+// ---------------- B-Tree Example ---------------- //
+console.log("\nB-Tree:");
+
+// Initialize the B-Tree with a minimum degree t = 2
+const bTree = new BTree(2);
+
+// Insert values into the B-Tree
+const bTreeValuesToInsert = [10, 20, 5, 6, 15, 30, 25, 16, 2, 12];
+bTreeValuesToInsert.forEach(value => bTree.insert(value));
+
+// Print the B-Tree structure
+console.log("B-Tree structure after insertions:");
+bTree.printTree();  // This should show the B-Tree level-by-level
+
+// Perform search operations in the B-Tree
+console.log(`\nDoes number "15" exist in the B-Tree? ${bTree.search(15) ? "Yes" : "No"}`);  // Expected output: Yes
+console.log(`Does number "40" exist in the B-Tree? ${bTree.search(40) ? "Yes" : "No"}`);  // Expected output: No
+
+// Perform delete operations in the B-Tree
+bTree.remove(15);
+console.log("\nB-Tree structure after deleting 15:");
+bTree.printTree();  // Should no longer contain 15
+
+bTree.remove(10);
+console.log("\nB-Tree structure after deleting 10:");
+bTree.printTree();  // Should no longer contain 10
+
+bTree.remove(5);
+console.log("\nB-Tree structure after deleting 5:");
+bTree.printTree();  // Should no longer contain 5
