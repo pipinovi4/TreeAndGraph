@@ -3,6 +3,7 @@
 
 #pragma once
 #include "../Nodes/node.h"
+#include <cstddef>
 
 /**
  * @class AVLTree
