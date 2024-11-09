@@ -204,48 +204,49 @@ bool AVLTree::search(const int target) const {
 
 // Removes a value from the AVL tree and maintains balance iteratively
 void AVLTree::remove(const int data) {
-    if (!root) return;  // Nothing to delete if the tree is empty
-
     std::stack<Node*> pathStack;
-    Node* node = root;
+    Node* current = root;
     Node* parent = nullptr;
 
-    // Traverse the tree to find the node to delete, while recording the path
-    while (node && node->data != data) {
-        pathStack.push(node);
-        parent = node;
-        if (data < node->data) {
-            node = node->left;
+    // Find the node to be deleted and store the path
+    while (current != nullptr && current->data != data) {
+        pathStack.push(current);
+        parent = current;
+        if (data < current->data) {
+            current = current->left;
         } else {
-            node = node->right;
+            current = current->right;
         }
     }
-    if (!node) return;  // Node not found, so nothing to delete
 
-    // Delete the node based on its child count
-    if (!node->left || !node->right) {
-        // Case 1: Node with one child or no child
-        Node* newChild = (node->left) ? node->left : node->right;
+    if (!current) return;  // Node not found
+
+    // Node with only one child or no child
+    if (!current->left || !current->right) {
+        Node* child = current->left ? current->left : current->right;
+
         if (!parent) {
-            root = newChild;  // Node is root, so update root
-        } else if (parent->left == node) {
-            parent->left = newChild;  // Update parent's left child
+            root = child;
+        } else if (parent->left == current) {
+            parent->left = child;
         } else {
-            parent->right = newChild; // Update parent's right child
+            parent->right = child;
         }
-        delete node;  // Delete the target node
-    } else {
-        // Case 2: Node with two children, replace with in-order successor
-        pathStack.push(node);
-        Node* successorParent = node;
-        Node* successor = node->right;
+        delete current;
 
+    } else {  // Node with two children
+        Node* successor = current->right;
+        Node* successorParent = current;
+
+        // Find successor (smallest in the right subtree)
         while (successor->left) {
-            pathStack.push(successor);
+            pathStack.push(successorParent);
             successorParent = successor;
             successor = successor->left;
         }
-        node->data = successor->data;
+
+        // Replace `current` with `successor`'s data and link replacement
+        current->data = successor->data;
         if (successorParent->left == successor) {
             successorParent->left = successor->right;
         } else {
@@ -254,29 +255,55 @@ void AVLTree::remove(const int data) {
         delete successor;
     }
 
-    // Balance the AVL Tree after deletion by rebalancing nodes in the path
+    // Restore AVL property
     while (!pathStack.empty()) {
-        Node* currentNode = pathStack.top();
+        Node* node = pathStack.top();
         pathStack.pop();
 
-        // Update height and balance factor
-        _updateHeight(currentNode);
-        const int balance = _getBalance(currentNode);
+        _updateHeight(node);
+        const int balance = _getBalance(node);
 
-        // Perform rotations to restore AVL property
-        if (balance > 1) {
-            if (_getBalance(currentNode->left) >= 0) {
-                currentNode = _rightRotation(currentNode);  // Left Left Case
+        if (balance > 1 && _getBalance(node->left) >= 0) {
+            if (!pathStack.empty()) {
+                if (pathStack.top()->left == node) {
+                    pathStack.top()->left = _rightRotation(node);
+                } else {
+                    pathStack.top()->right = _rightRotation(node);
+                }
             } else {
-                currentNode->left = _leftRotation(currentNode->left); // Left Right Case
-                currentNode = _rightRotation(currentNode);
+                root = _rightRotation(node);
             }
-        } else if (balance < -1) {
-            if (_getBalance(currentNode->right) <= 0) {
-                currentNode = _leftRotation(currentNode); // Right Right Case
+        } else if (balance > 1 && _getBalance(node->left) < 0) {
+            node->left = _leftRotation(node->left);
+            if (!pathStack.empty()) {
+                if (pathStack.top()->left == node) {
+                    pathStack.top()->left = _rightRotation(node);
+                } else {
+                    pathStack.top()->right = _rightRotation(node);
+                }
             } else {
-                currentNode->right = _rightRotation(currentNode->right); // Right Left Case
-                currentNode = _leftRotation(currentNode);
+                root = _rightRotation(node);
+            }
+        } else if (balance < -1 && _getBalance(node->right) <= 0) {
+            if (!pathStack.empty()) {
+                if (pathStack.top()->left == node) {
+                    pathStack.top()->left = _leftRotation(node);
+                } else {
+                    pathStack.top()->right = _leftRotation(node);
+                }
+            } else {
+                root = _leftRotation(node);
+            }
+        } else if (balance < -1 && _getBalance(node->right) > 0) {
+            node->right = _rightRotation(node->right);
+            if (!pathStack.empty()) {
+                if (pathStack.top()->left == node) {
+                    pathStack.top()->left = _leftRotation(node);
+                } else {
+                    pathStack.top()->right = _leftRotation(node);
+                }
+            } else {
+                root = _leftRotation(node);
             }
         }
     }
