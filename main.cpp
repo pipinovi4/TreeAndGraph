@@ -3,6 +3,7 @@
 #include "PerfectBinaryTrees/perfect_binary_tree.h"
 #include "BinarySearchTrees/binary_search_tree.h"
 #include "AVLTree/avl_tree.h"
+#include "BTrees/b_tree.h"
 #include <iostream>
 
 int main() {
@@ -155,4 +156,57 @@ int main() {
     avlTree.remove(40);
     std::cout << "AVL Tree after removing \"40\": ";
     avlTree.printInOrder(); // Expected in-order output: 10 20 35 50
+
+    // ---------------- B-Tree Example ---------------- //
+    std::cout << "\nB-Tree:\n";
+
+    // Initialize the B-Tree with minimum degree t (e.g., t = 3)
+    constexpr int t = 3;
+    BTree bTree(t);
+
+    // Insert elements into the B-Tree
+    bTree.insert(10);
+    bTree.insert(20);
+    bTree.insert(5);
+    bTree.insert(6);
+    bTree.insert(12);
+    bTree.insert(30);
+    bTree.insert(7);
+    bTree.insert(17);
+
+    // Print the B-Tree structure
+    std::cout << "B-Tree after insertions: ";
+    bTree.printTree(); // Expected to show level-order traversal of B-Tree
+
+    // Perform search operations on B-Tree
+    std::cout << "\nDoes number \"6\" exist in the B-Tree: "
+              << (bTree.search(6) ? "True" : "False") << std::endl;  // Expected output: True
+
+    std::cout << "Does number \"15\" exist in the B-Tree: "
+              << (bTree.search(15) ? "True" : "False") << std::endl;  // Expected output: False
+
+    // Remove elements from the B-Tree
+    bTree.remove(6);
+    std::cout << "B-Tree after removing \"6\": ";
+    bTree.printTree(); // Should show the structure after removing 6
+
+    bTree.remove(13); // This element does not exist
+    std::cout << "B-Tree after attempting to remove \"13\" (nonexistent): ";
+    bTree.printTree(); // Should show the tree remains unchanged
+
+    bTree.remove(7);
+    std::cout << "B-Tree after removing \"7\": ";
+    bTree.printTree(); // Structure after removing 7
+
+    bTree.remove(4); // Nonexistent node test
+    std::cout << "B-Tree after attempting to remove \"4\" (nonexistent): ";
+    bTree.printTree(); // Tree should remain unchanged
+
+    bTree.remove(20);
+    std::cout << "B-Tree after removing \"20\": ";
+    bTree.printTree(); // Structure after removing 20
+
+    bTree.remove(5);
+    std::cout << "B-Tree after removing \"5\": ";
+    bTree.printTree(); // Structure after removing 5
 }
