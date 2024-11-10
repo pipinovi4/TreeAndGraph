@@ -3,63 +3,33 @@
 
 #pragma once
 #include <vector>
+#include <cstddef>
 
-/**
- * @class BTreeNode
- * @brief Represents a node in a B-Tree.
- *
- * A BTreeNode class is used within a B-Tree data structure to store keys and child pointers.
- * This class supports operations such as adding and removing keys, checking if the node is full, and
- * storing child pointers for non-leaf nodes.
- */
 class BTreeNode {
 public:
-    /**
-     * @brief Constructor for BTreeNode.
-     * @param is_leaf Indicates if the node is a leaf node.
-     *
-     * Initializes a BTreeNode as a leaf or internal node. Leaf nodes do not have child pointers,
-     * while internal nodes may contain child pointers.
-     */
-    inline explicit BTreeNode(bool is_leaf);
+ inline BTreeNode(int t, bool is_leaf);
+ inline ~BTreeNode();
 
-    /**
-     * @brief Destructor for BTreeNode.
-     *
-     * Cleans up any resources associated with the BTreeNode, if needed.
-     * The destructor is currently default as no dynamic memory allocation is done in the node.
-     */
-    inline ~BTreeNode();
+ inline BTreeNode* search(const int& key);
+ inline void remove(const int& key);
+ inline void fill(const size_t& idx);
+private:
+ size_t _t;
+ bool _is_leaf;
+ std::vector<int> _keys;
+ std::vector<BTreeNode*> _children;
 
-    bool is_leaf;                   ///< Indicates whether the node is a leaf.
-    std::vector<int> keys;          ///< Stores the keys present in the node.
-    std::vector<BTreeNode*> children;      ///< Stores child pointers for internal nodes. Empty if node is a leaf.
-
-    /**
-     * @brief Adds a key to the node in sorted order.
-     * @param key The key to add to the node.
-     *
-     * Inserts a new key into the node's key list, maintaining sorted order.
-     */
-    inline void addKey(int key);
-
-    /**
-     * @brief Removes a specified key from the node.
-     * @param key The key to remove from the node.
-     *
-     * Searches for the specified key and removes it from the node's key list if found.
-     */
-    inline void removeKey(int key);
-
-    /**
-     * @brief Checks if the node has reached the maximum allowed number of keys.
-     * @param max_keys The maximum number of keys allowed in the node.
-     * @return True if the node contains the maximum number of keys, false otherwise.
-     *
-     * Determines if the node is full based on the specified `max_keys` limit, which is necessary
-     * to know when the node needs to be split in a B-Tree.
-     */
-    inline bool isFull(int max_keys) const;
+ inline void insertNonFull(const int& key);
+ inline void splitChild(const int& i, BTreeNode*y);
+ inline size_t findKey(const int& key) const;
+ inline int getPred(const size_t& idx) const;
+ inline int getSucc(const size_t& idx) const;
+ inline void removeFromLeaf(const size_t& idx);
+ inline void removeFromNonLeaf(const size_t& idx, std::stack<BTreeNode*>& stackNodes);
+ inline void borrowFromPrev(const size_t& idx);
+ inline void borrowFromNext(const size_t& idx);
+ inline void merge(const size_t& idx);
+ inline void printNode(int level=0) const;
 };
 
 #include "b_tree_node.tpp"
