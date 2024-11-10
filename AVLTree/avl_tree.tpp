@@ -12,19 +12,19 @@ AVLTree::AVLTree() {
 
 // Destructor to delete all nodes in the AVL tree using an iterative approach
 inline AVLTree::~AVLTree() {
-    std::stack<Node> stackNodes;
+    std::stack<Node*> stackNodes;
     if (root) {
-        stackNodes.push(*root);
+        stackNodes.push(root);  // Push the root node pointer
     }
 
     // Use a stack to iteratively delete all nodes
     while (!stackNodes.empty()) {
-        const auto current = &stackNodes.top();
+        const Node* current = stackNodes.top();  // Retrieve the pointer to the current node
         stackNodes.pop();
 
         // Push left and right children onto the stack for deletion if they exist
-        if (current->left) stackNodes.push(*current->left);
-        if (current->right) stackNodes.push(*current->right);
+        if (current->left) stackNodes.push(current->left);
+        if (current->right) stackNodes.push(current->right);
 
         delete current;  // Free the memory of the current node
     }
