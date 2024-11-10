@@ -59,31 +59,35 @@ void BTree::remove(const int& key) {
 }
 
 void BTree::printTree() const {
-    std::stack<std::pair<BTreeNode*, int>> stack;
-    stack.emplace(_root, 0);
+    if (_root) {
+        std::stack<std::pair<BTreeNode*, int>> stack;
+        stack.emplace(_root, 0);
 
-    while (!stack.empty()) {
-        auto* currentNode = stack.top().first;
-        const auto& currentLevel = stack.top().second;
-        stack.pop();
+        while (!stack.empty()) {
+            auto* currentNode = stack.top().first;
+            const auto& currentLevel = stack.top().second;
+            stack.pop();
 
-        if (!currentNode->_keys.empty()) {
             std::cout << "Level " << currentLevel << ": ";
             std::cout << "[";
-            for (const auto& key : currentNode->_keys) {
-                if (key == currentNode->_keys.back()) {
-                    std::cout << key << "]";
-                } else {
-                    std::cout << key << ", ";
+            for (size_t i = 0; i < currentNode->_keys.size(); ++i) {
+                std::cout << currentNode->_keys[i];
+                if (i != currentNode->_keys.size() - 1) {
+                    std::cout << ", ";
                 }
             }
-        }
+            std::cout << "] ";
 
-        if (!currentNode->_is_leaf) {
-            for (auto* child : currentNode->_children) {
-                if (!child->_keys.empty()) stack.emplace(child, currentLevel + 1);
+            if (!currentNode->_is_leaf) {
+                for (auto* child : currentNode->_children) {
+                    if (!child->_keys.empty()) stack.emplace(child, currentLevel + 1);
+                }
             }
+
+            std::cout << std::endl;
         }
+    } else {
+        std::cout << "Tree is empty." << std::endl;
     }
 }
 

@@ -34,57 +34,64 @@ BTreeNode::~BTreeNode() {
     }
 }
 
-// Split the child `y` of this node at index `i`
-// This is called when `y` is full, so it splits into two nodes and promotes the median key
 void BTreeNode::splitChild(const int& i, BTreeNode* y) {
-    const int t = static_cast<int>(_t);  // Get the minimum degree
-    auto* z = new BTreeNode(t, y->_is_leaf); // Create a new node `z` with the same leaf status as `y`
+    const int t = static_cast<int>(_t);  // Minimum degree of the B-tree
+    auto* z = new BTreeNode(t, y->_is_leaf); // New node `z` inherits leaf status from `y`
 
-    // Move the last `t` keys from `y` to `z`
+    // Move the last `t-1` keys from `y` to `z`
     z->_keys.assign(y->_keys.begin() + t, y->_keys.end());
 
-    // If `y` is not a leaf, also move the last `t` children from `y` to `z`
+    // If `y` is not a leaf, move the last `t` children from `y` to `z`
     if (!y->_is_leaf) {
         z->_children.assign(y->_children.begin() + t, y->_children.end());
     }
 
-    // Resize `y`'s keys and children to exclude the moved elements
+    // Resize `y`'s keys to keep only the first `t-1` keys
     y->_keys.resize(t - 1);
-    y->_children.resize(t);
+    
+    // Resize `y`'s children to keep only the first `t` children if `y` is not a leaf
+    if (!y->_is_leaf) {
+        y->_children.resize(t);
+    }
 
-    // Insert `z` into this node's children and promote the median key from `y`
+    // Insert `z` into the parent node’s children vector at index `i + 1`
     _children.insert(_children.begin() + i + 1, z);
-    _keys.insert(_keys.begin() + i, y->_keys.back());
+
+    // Promote the median key from `y` (at index `t-1`) into the parent node
+    _keys.insert(_keys.begin() + i, y->_keys[t - 1]);
 }
 
 // Insert a key into a non-full node using an iterative approach
 void BTreeNode::insertNonFull(const int& key) {
     std::stack<BTreeNode*> stackNodes;
-    stackNodes.emplace(this); // Begin with the current node
+    stackNodes.emplace(this);  // Start from the root
 
     while (!stackNodes.empty()) {
-        int i = static_cast<int>(_keys.size()) - 1; // Start at the last key position
-        BTreeNode* currentNode = stackNodes.top();  // Get the current node from the stack
+        BTreeNode* currentNode = stackNodes.top();
         stackNodes.pop();
 
-        // If it's a leaf node, find the correct position and insert the key
+        int i = static_cast<int>(currentNode->_keys.size()) - 1;
+
         if (currentNode->_is_leaf) {
-            currentNode->_keys.push_back(0); // Add temporary space for the new key
-            while (i >= 0 && key < currentNode->_keys[i]) { // Shift keys right to make space
-                currentNode->_keys[i + 1] = currentNode->_keys[i];
+            // Insert key directly into the leaf node at the correct position
+            currentNode->_keys.resize(currentNode->_keys.size() + 1);  // Make space
+            while (i >= 0 && key < currentNode->_keys[i]) {
+                currentNode->_keys[i + 1] = currentNode->_keys[i];  // Shift keys
                 i -= 1;
             }
-            currentNode->_keys[i + 1] = key; // Place the key in the correct position
+            currentNode->_keys[i + 1] = key;  // Insert key
         } else {
-            // If not a leaf, find the child that will receive the new key
+            // Determine the child to descend to
             while (i >= 0 && key < currentNode->_keys[i]) i--;
             i++;
-            // Split the child if it is full
+
+            // Split the child if it’s full
             if (currentNode->_children[i]->_keys.size() == 2 * currentNode->_t - 1) {
                 splitChild(i, currentNode->_children[i]);
                 if (key > currentNode->_keys[i]) i++;
             }
-            // Add the chosen child to stack for further processing
+
+            // Push the child onto the stack for further processing
             stackNodes.emplace(currentNode->_children[i]);
         }
     }
@@ -115,23 +122,39 @@ void BTreeNode::remove(const int& key) {
     stackNodes.push(this);
 
     while (!stackNodes.empty()) {
-        auto* currentNode = stackNodes.top();
+        BTreeNode* currentNode = stackNodes.top();
         stackNodes.pop();
 
-        const size_t idx = findKey(key); // Find the position of the key in current node
+        // Find the position of the key in the current node
+        const size_t idx = currentNode->findKey(key);
 
         if (idx < currentNode->_keys.size() && currentNode->_keys[idx] == key) {
-            if (currentNode->_is_leaf) removeFromLeaf(idx); // Remove from leaf node directly
-            else removeFromNonLeaf(idx, stackNodes);        // Remove from non-leaf node iteratively
-        } else {
-            if (currentNode->_is_leaf) return;              // Key not found and node is leaf, end
-            const size_t flag = idx == currentNode->_keys.size();
-            if (currentNode->_children[idx]->_keys.size() < currentNode->_t) currentNode->fill(idx); // Ensure enough keys in child
-            if (flag && idx > currentNode->_keys.size()) {
-                stackNodes.push(currentNode->_children[idx - 1]);
+            // Key found in the current node
+            if (currentNode->_is_leaf) {
+                // If it's a leaf, remove directly
+                currentNode->removeFromLeaf(idx);
             } else {
-                stackNodes.push(currentNode->_children[idx]);
+                // If it's an internal node, remove using the iterative approach
+                currentNode->removeFromNonLeaf(idx, stackNodes);
             }
+        } else {
+            // Key not found in this node
+            if (currentNode->_is_leaf) return;  // Key not present, exit
+
+            // Ensure the child has enough keys
+            if (currentNode->_children[idx]->_keys.size() < currentNode->_t) {
+                currentNode->fill(idx);
+            }
+
+            // Re-evaluate the target child after fill
+            BTreeNode* nextChild;
+            if (idx < currentNode->_keys.size() && key > currentNode->_keys[idx]) {
+                nextChild = currentNode->_children[idx + 1];
+            } else {
+                nextChild = currentNode->_children[idx];
+            }
+            
+            stackNodes.push(nextChild);  // Push the next child to process
         }
     }
 }
