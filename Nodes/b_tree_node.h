@@ -16,6 +16,11 @@
  */
 class BTreeNode {
 public:
+    std::vector<int> _keys;       ///< Vector of keys stored in this node.
+    std::vector<BTreeNode*> _children;  ///< Vector of pointers to child nodes.
+    bool _is_leaf;                ///< True if the node is a leaf node.
+    size_t _t;                    ///< Minimum degree of the B-tree.
+
     /**
      * @brief Constructs a BTreeNode with a specified minimum degree and leaf status.
      * @param t Minimum degree of the B-tree (defines the range of keys in the node).
@@ -50,12 +55,6 @@ public:
      */
     inline void fill(const size_t& idx);
 
-private:
-    size_t _t;                    ///< Minimum degree of the B-tree.
-    bool _is_leaf;                ///< True if the node is a leaf node.
-    std::vector<int> _keys;       ///< Vector of keys stored in this node.
-    std::vector<BTreeNode*> _children;  ///< Vector of pointers to child nodes.
-
     /**
      * @brief Inserts a key into a non-full node.
      * This method assumes the node is not full when called and inserts the key while preserving order.
@@ -69,8 +68,9 @@ private:
      * @param i Index of the child to split.
      * @param y Pointer to the child node to be split.
      */
-    inline void splitChild(const int& i, BTreeNode* y);
+   inline void splitChild(const int& i, BTreeNode* y);
 
+private:
     /**
      * @brief Finds the index of the first key greater than or equal to a given key.
      * This function is used in search and deletion operations.
