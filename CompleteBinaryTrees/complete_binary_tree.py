@@ -1,4 +1,4 @@
-from Nodes.node import Node  # Import the Node class to represent each node in the tree
+from Nodes.defaultNodes.node import Node  # Import the Node class to represent each node in the tree
 
 class CompleteBinaryTree:
     def __init__(self):

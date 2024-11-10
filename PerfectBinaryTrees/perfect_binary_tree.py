@@ -1,4 +1,4 @@
-from Nodes.node import Node  # Importing the Node class to represent nodes in the tree
+from Nodes.defaultNodes.node import Node  # Importing the Node class to represent nodes in the tree
 
 
 class PerfectBinaryTree:

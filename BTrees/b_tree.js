@@ -1,5 +1,5 @@
 // Import the BTreeNode class, which represents individual nodes in the B-Tree.
-const BTreeNode = require("../Nodes/b_tree_node");
+const BTreeNode = require("../Nodes/BTreeNodes/b_tree_node");
 
 /**
  * Class representing a B-Tree.

@@ -1,4 +1,4 @@
-from Nodes.b_tree_node import BTreeNode
+from Nodes.BTreeNodes.b_tree_node import BTreeNode
 
 
 class BTree:

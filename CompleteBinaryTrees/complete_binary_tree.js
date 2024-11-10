@@ -1,4 +1,4 @@
-const Node = require("../Nodes/node"); // Import the Node class to represent each node in the tree
+const Node = require("../Nodes/defaultNodes/node"); // Import the Node class to represent each node in the tree
 
 /**
  * Class representing a Complete Binary Tree.

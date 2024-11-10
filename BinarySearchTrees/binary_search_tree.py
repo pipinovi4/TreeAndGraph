@@ -1,4 +1,4 @@
-from Nodes.node import Node
+from Nodes.defaultNodes.node import Node
 
 class BinarySearchTree:
     def __init__(self):

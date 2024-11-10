@@ -1,4 +1,4 @@
-const Node = require('../Nodes/node.js'); // Import Node class
+const Node = require('../Nodes/defaultNodes/node.js'); // Import Node class
 
 /**
  * Class representing a Full Binary Tree, where each node has either 0 or exactly 2 children.

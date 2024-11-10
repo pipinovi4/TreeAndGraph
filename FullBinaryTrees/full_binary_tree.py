@@ -1,4 +1,4 @@
-from Nodes.node import Node  # Import Node class for representing nodes in the tree
+from Nodes.defaultNodes.node import Node  # Import Node class for representing nodes in the tree
 
 
 class FullBinaryTree:
