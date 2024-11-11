@@ -4,6 +4,7 @@ const PerfectBinaryTree = require('./PerfectBinaryTrees/perfect_binary_tree');
 const BinarySearchTree = require("./BinarySearchTrees/binary_search_tree")
 const AVLTree = require("./AVLTree/avl_tree");
 const BTree = require("./BTrees/b_tree");
+const BPTree = require("./BPTrees/b_plus_tree");
 
 console.log("Full Binary Tree:");
 
@@ -146,3 +147,43 @@ bTree.printTree();  // Should no longer contain 10
 bTree.remove(5);
 console.log("\nB-Tree structure after deleting 5:");
 bTree.printTree();  // Should no longer contain 5
+
+console.log("\nB+ Tree:");
+
+// ---------------- B+ Tree Example ---------------- //
+
+// Initialize the B+ Tree with a minimum degree t = 2
+const bPlusTree = new BPTree(2);
+
+// Insert values into the B+ Tree
+const bPlusTreeValuesToInsert = [10, 20, 5, 6, 15, 30, 25, 16, 2, 12, 28, 35];
+bPlusTreeValuesToInsert.forEach(value => bPlusTree.insert(value));
+
+// Print the B+ Tree structure after insertions
+console.log("B+ Tree structure after insertions:");
+bPlusTree.printTree();  // This should show the B+ Tree level-by-level
+
+// Perform search operations in the B+ Tree
+console.log(`\nDoes number "15" exist in the B+ Tree? ${bPlusTree.search(15) ? "Yes" : "No"}`);  // Expected output: Yes
+console.log(`Does number "40" exist in the B+ Tree? ${bPlusTree.search(40) ? "Yes" : "No"}`);  // Expected output: No
+
+// Perform a range query in the B+ Tree
+console.log("\nRange Query for values between 10 and 30:");
+console.log(bPlusTree.rangeQuery(10, 30));  // Expected output: Values within range [10, 30]
+
+// Perform delete operations in the B+ Tree
+bPlusTree.delete(15);
+console.log("\nB+ Tree structure after deleting 15:");
+bPlusTree.printTree();  // Should no longer contain 15
+
+bPlusTree.delete(10);
+console.log("\nB+ Tree structure after deleting 10:");
+bPlusTree.printTree();  // Should no longer contain 10
+
+bPlusTree.delete(5);
+console.log("\nB+ Tree structure after deleting 5:");
+bPlusTree.printTree();  // Should no longer contain 5
+
+// Perform another range query in the B+ Tree after deletions
+console.log("\nRange Query for values between 10 and 30 after deletions:");
+console.log(bPlusTree.rangeQuery(10, 30));  // Expected output: Updated values within range [10, 30]
