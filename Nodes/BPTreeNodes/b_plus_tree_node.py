@@ -42,11 +42,11 @@ class BPTreeNode:
         :param i: Index of the child to be split.
         """
         t = self.t
-        child = self.children[i]
-        new_child = BPTreeNode(t, child.is_leaf)
+        child = self.children[i]  # [] -> [10, 20, 30] index i is 10. child = 10
+        new_child = BPTreeNode(t, child.is_leaf)  # []
 
         # Split the keys and children
-        new_child.keys = child.keys[t:]
+        new_child.keys = child.keys[t:]  # []
         child.keys = child.keys[:t - 1]
 
         if not child.is_leaf:

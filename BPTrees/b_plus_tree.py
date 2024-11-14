@@ -15,10 +15,10 @@ class BPTree:
         Inserts a key into the B+ Tree.
         :param key: Key to be inserted.
         """
-        root = self.root
+        root = self.root  # [10, 20, 30]
         if len(root.keys) == 2 * self.t - 1:  # Root is full
-            new_root = BPTreeNode(self.t, is_leaf=False)
-            new_root.children.append(root)
+            new_root = BPTreeNode(self.t, is_leaf=False)  # []
+            new_root.children.append(root)  # [] -> [10, 20, 30]
             new_root.split_children(0)
             self.root = new_root  # Update root reference
         self.root.insert_non_full(key)
