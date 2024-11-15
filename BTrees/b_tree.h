@@ -1,7 +1,7 @@
 #ifndef B_TREE_H
 #define B_TREE_H
 
-#include "../Nodes/b_tree_node.h"
+#include "../Nodes/BTreeNodes/b_tree_node.h"
 
 /**
  * @class BTree

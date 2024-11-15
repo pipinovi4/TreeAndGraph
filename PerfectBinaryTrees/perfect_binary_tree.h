@@ -2,7 +2,7 @@
 #define PERFECT_BINARY_TREE_H
 
 #pragma once
-#include "../Nodes/node.h"  // Include the Node class definition for creating nodes in the tree
+#include "../Nodes/defaultNodes/node.h"
 #include <vector>           // Include vector for dynamic array functionality
 
 /**

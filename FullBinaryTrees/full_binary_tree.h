@@ -2,7 +2,7 @@
 #define FULL_BINARY_TREE_H
 
 #pragma once
-#include "../Nodes/node.h"
+#include "../Nodes/defaultNodes/node.h"
 
 // FullBinaryTree class to represent a full binary tree structure
 class FullBinaryTree {

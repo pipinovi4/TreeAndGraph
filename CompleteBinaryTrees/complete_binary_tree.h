@@ -3,7 +3,7 @@
 
 #pragma once
 #include <vector>
-#include "../Nodes/node.h"  // Include the Node class definition
+#include "../Nodes/defaultNodes/node.h"
 
 /**
  * Class representing a Complete Binary Tree.
