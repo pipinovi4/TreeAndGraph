@@ -37,24 +37,41 @@ BPTree::~BPTree() {
 }
 
 void BPTree::insert(const int key) {
-    // Copy root that processing root without mutation parameter
-    BPTreeNode* copyRoot = _root;
+    // If the root is a leaf and not full, insert directly
+    if (_root->_children.empty() && _root->_keys.size() < 2 * _t - 1) {
+        // Insert the key in the appropriate position in the root
+        const auto it = std::lower_bound(_root->_keys.begin(), _root->_keys.end(), key);
+        _root->_keys.insert(it, key);
+        return; // Insertion complete
+    }
 
-    // Check that root have full quantity of the nodes
-    if (copyRoot->_keys.size() == 2 * _t - 1) {
-        // Create new empty BPTreeNode for newRoot structure
+    BPTreeNode* oldRoot = _root;
+
+    // Check if the root is full
+    if (oldRoot->_keys.size() == 2 * _t - 1) {
+        // Create a new root node
         const auto newRoot = new BPTreeNode(_t, false);
 
-        // Push root node to the newRoot for that old root become child of the neRoot
-        newRoot->_children.push_back(copyRoot);
+        // Update `_parent` of the old root
+        oldRoot->_parent = newRoot;
 
-        // Split children by first in the newRoot
+        // If old root doesn't have children then make him as leaf
+        if (oldRoot->_children.empty()) {
+            // Make copyRoot as leaf because we descent them into level + 1
+            oldRoot->_is_leaf = true;
+        }
+
+        // The current root becomes a child of the new root
+        newRoot->_children.push_back(oldRoot);
+
+        // Split the full root
         newRoot->splitChildren(0);
 
-        // Change old root on the processed new root
+        // Update the root
         _root = newRoot;
     }
-    // If root it not full just insert as default
+
+    // Insert the key into the appropriate node
     _root->insertNonFull(key);
 }
 
@@ -95,7 +112,7 @@ void BPTree::remove(int key) {
 
         if (currentNode->_is_leaf) {
             // If it's a leaf, remove the key if it exists
-            auto it = std::find(currentNode->_keys.begin(), currentNode->keys.end(), key);
+            auto it = std::find(currentNode->_keys.begin(), currentNode->_keys.end(), key);
             if (it != currentNode->_keys.end()) {
                 currentNode->_keys.erase(it); // Remove key from leaf
             }
@@ -148,6 +165,8 @@ std::vector<int> BPTree::rangeQuery(const int start_key, const int end_key) cons
     while (node) {
         // Iterate over keys in the node
         for (const auto& key : node->_keys) {
+            if (key > end_key) break;
+
             // If key less than start_key and bigger than end_key push current key into result
             if (start_key <= key <= end_key) result.push_back(key);
             // If key bigger than end_key retun result
@@ -162,6 +181,14 @@ std::vector<int> BPTree::rangeQuery(const int start_key, const int end_key) cons
 }
 
 void BPTree::_fixChild(BPTreeNode* parent, const size_t index) {
+    if (!parent) {
+        throw std::invalid_argument("Parent node is null.");
+    }
+
+    if (index >= parent->_children.size()) {
+        throw std::out_of_range("Index is out of range for parent->_children.");
+    }
+
     BPTreeNode* current_child = parent->_children[index];
 
     // Case 1: Check left sibling for redistribution
@@ -215,27 +242,83 @@ void BPTree::_fixChild(BPTreeNode* parent, const size_t index) {
 }
 
 void BPTree::_mergeNodes(BPTreeNode* parent, const int index) {
+    if (index < 0 || index >= static_cast<int>(parent->_children.size()) - 1) {
+        throw std::out_of_range("Index is out of range for merging nodes.");
+    }
+
     BPTreeNode* left_child = parent->_children[index];
     BPTreeNode* right_child = parent->_children[index + 1];
+
+    if (!left_child || !right_child) {
+        throw std::logic_error("One or both children are null for merging.");
+    }
 
     // Move the key from parent to the left child
     left_child->_keys.push_back(parent->_keys[index]);
 
     // Remove the key and right child from parent
-    parent->_keys.erase(parent->_keys.begin() + static_cast<int>(index));
-    parent->_children.erase(parent->_children.begin() + static_cast<int>(index) + 1);
+    parent->_keys.erase(parent->_keys.begin() + index);
+    parent->_children.erase(parent->_children.begin() + index + 1);
 
     // Merge the keys and children of the right child into the left child
     left_child->_keys.insert(left_child->_keys.end(), right_child->_keys.begin(), right_child->_keys.end());
 
     if (!left_child->_is_leaf) {
         left_child->_children.insert(left_child->_children.end(), right_child->_children.begin(), right_child->_children.end());
+
+        // Update `_parent` for all moved children
+        for (auto* grandchild : right_child->_children) {
+            grandchild->_parent = left_child;
+        }
     } else {
         left_child->_next = right_child->_next; // Link to the next leaf node if it's a leaf
     }
 
     // Delete the right child to free memory
     delete right_child;
+}
+
+void BPTree::printTree() const {
+    if (!_root) {
+        std::cout << "[]" << std::endl;
+        return;
+    }
+
+    std::queue<std::pair<BPTreeNode*, int>> queue;
+    queue.emplace(_root, 0);
+
+    int current_level = -1;
+
+    while (!queue.empty()) {
+        auto [node, level] = queue.front();
+        queue.pop();
+
+        // Start a new line when changing levels
+        if (level > current_level) {
+            if (current_level != -1) {
+                std::cout << "\n";  // Start a new line for the new level
+            }
+            std::cout << "Level " << level << ": ";
+            current_level = level;
+        }
+
+        // Print the current node's keys
+        std::cout << "[";
+        for (size_t i = 0; i < node->_keys.size(); ++i) {
+            std::cout << node->_keys[i];
+            if (i != node->_keys.size() - 1)
+                std::cout << ", ";
+        }
+        std::cout << "] ";
+
+        // Add children to the queue for next level processing
+        if (!node->_is_leaf) {
+            for (auto* child : node->_children) {
+                if (child) queue.emplace(child, level + 1);
+            }
+        }
+    }
+    std::cout << std::endl;
 }
 
 #endif //B_PLUS_TREE_TPP
