@@ -19,6 +19,7 @@ public:
     bool _is_leaf;  ///< Boolean indicating if this node is a leaf (true if leaf, false if internal).
     std::vector<int> _keys;  ///< Vector storing keys in the node, sorted in ascending order.
     std::vector<BPTreeNode*> _children;  ///< Vector storing pointers to child nodes (only used if not a leaf).
+    BPTreeNode* _parent;  ///< Pointer to the parent node (for propagating above in hierarchy)
     BPTreeNode* _next;  ///< Pointer to the next leaf node (used for range queries in leaf nodes).
 
     /**
@@ -26,14 +27,7 @@ public:
      * @param t Minimum degree of the B+ Tree node.
      * @param is_leaf Boolean indicating if the node is a leaf (default is false).
      */
-    inline explicit BPTreeNode(size_t t, bool is_leaf = false);
-
-    /**
-     * @brief Destructor to clean up dynamically allocated memory.
-     *
-     * Deletes all child nodes in the `_children` vector to prevent memory leaks.
-     */
-    inline ~BPTreeNode();
+    inline explicit BPTreeNode(size_t t, bool is_leaf = false, BPTreeNode* parent = nullptr);
 
     /**
      * @brief Inserts a key into the node if it is not full.
