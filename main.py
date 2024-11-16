@@ -99,4 +99,3 @@ if __name__ == "__main__":
 
     print("\nRange Query for values between 10 and 30 after deletions:")
     print(b_plus_tree.range_query(10, 30))  # Expected output: updated values in range 10 to 30
-#[20, 25, 16, 30, 12, 28]
