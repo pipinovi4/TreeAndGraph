@@ -5,7 +5,7 @@
 
 // Constructor for BPTreeNode
 // Initializes a new node with a specified minimum degree and a leaf status
-BPTreeNode::BPTreeNode(const size_t t, const bool is_leaf) {
+BPTreeNode::BPTreeNode(const size_t t, const bool is_leaf, BPTreeNode* parent) {
     // Set the minimum degree (t) of the node.
     // This defines the minimum and maximum number of keys the node can hold.
     _t = t;
@@ -22,69 +22,48 @@ BPTreeNode::BPTreeNode(const size_t t, const bool is_leaf) {
     // This will hold pointers to child nodes if this is an internal node.
     _children = {};
 
+    // Set the parent of the node
+    // This pointer is used only for propagation above by hierarchy
+    _parent = parent;
+
     // Initialize the `next` pointer to nullptr.
     // This pointer is used only for leaf nodes to link them in a sequence for range queries.
     _next = nullptr;
-}
-
-// Destructor for BPTreeNode
-// This destructor deletes only child nodes that are dynamically allocated.
-// Other nodes in the B+ tree structure will handle their own deletion.
-BPTreeNode::~BPTreeNode() {
-    // Delete all children nodes if they are pointers
-    for (const auto& child : _children) {
-        delete child;  // This calls the destructor of each child node
-    }
-    _children.clear();  // Clear the vector after deleting children to prevent dangling pointers
 }
 
 // Inserts a key into a node that is not full. If the node is a leaf, it inserts
 // the key directly into the correct position. If it's an internal node, it finds
 // the correct child node and descends into it, splitting the child if necessary.
 void BPTreeNode::insertNonFull(const int key) {
-    size_t i = _keys.size() - 1;  // Start from the last key in the node
+    auto current = this;
 
-    // If the node is a leaf, find the correct position and insert the key
-    if (_is_leaf) {
-        i = 0;
-        // Find the appropriate index to insert the key in a sorted order
-        while (i < _keys.size() && _keys[i] < key) {
-            i++;
-        }
-        // Insert the key at the found position in the sorted order
-        _keys.insert(_keys.begin() + static_cast<int>(i), key);
-    } else {
-        // Descend to the appropriate child without using recursion
-        auto currentNode = this;
-        while (!currentNode->_is_leaf) {
-            // Find the child that will have the key by iterating through keys
-            i = currentNode->_keys.size() - 1;
-            while (key < currentNode->_keys[i]) {
-                if (i == 0) break;  // Prevent unsigned wraparound
-                i--;
+    while (!current->_is_leaf) {
+        // Navigate to the correct child for insertion
+        const auto it = std::upper_bound(current->_keys.begin(), current->_keys.end(), key);
+        int i = static_cast<int>(std::distance(current->_keys.begin(), it));
+
+        // Split child if it is full
+        if (i < current->_children.size() && current->_children[i]->_keys.size() == 2 * _t - 1) {
+            current->splitChildren(i);
+
+            // Adjust the target child index if the key should go to the newly created right child
+            if (key > current->_keys[i]) {
+                i += 1;
             }
-            i++;
-
-            // If the child node is full, split it before proceeding
-            if (currentNode->_children[i]->_keys.size() == 2 * currentNode->_t - 1) {
-                currentNode->splitChildren(i);
-                // After splitting, the new key at index `i` may need adjustment
-                if (key > currentNode->_keys[i]) {
-                    i++;
-                }
-            }
-
-            // Move to the child node
-            currentNode = currentNode->_children[i];
         }
 
-        // At this point, `currentNode` is a leaf node; insert the key here
-        i = 0;
-        while (i < currentNode->_keys.size() && currentNode->_keys[i] < key) {
-            i++;
-        }
-        currentNode->_keys.insert(currentNode->_keys.begin() + static_cast<int>(i), key);
+        // Move down to the child node
+        current = current->_children[i];
     }
+
+    // ** Check for duplicates in the leaf node **
+    if (std::find(current->_keys.begin(), current->_keys.end(), key) != current->_keys.end()) {
+        return; // Key already exists, do nothing
+    }
+
+    // Insert key into the correct position in the leaf node
+    const auto pos = std::lower_bound(current->_keys.begin(), current->_keys.end(), key);
+    current->_keys.insert(pos, key);
 }
 
 // Splits a full child node at the specified index. The child node is divided into
@@ -92,17 +71,36 @@ void BPTreeNode::insertNonFull(const int key) {
 void BPTreeNode::splitChildren(const size_t i) {
     const int t = static_cast<int>(_t);  // Minimum degree
     BPTreeNode* child = _children[i];  // The child node to be split
-    const auto newChild = new BPTreeNode(t, child->_is_leaf);  // Create a new node for the split
 
-    // Split the keys of the child: move the second half of keys to the new child node
-    newChild->_keys = {child->_keys.begin() + t, child->_keys.end()};
-    child->_keys = {child->_keys.begin(), child->_keys.begin() + t - 1};
+    if (!child) {
+        throw std::invalid_argument("Child node is null and cannot be split.");
+    }
 
-    // If the child is not a leaf, split its children as well
+    if (child->_keys.size() < 2 * t - 1) {
+        throw std::length_error("Child node does not have enough keys to split.");
+    }
+
+    // Create a new node for the split
+    auto* newChild = new BPTreeNode(t, child->_is_leaf);
+
+    // Move the second half of keys to the new child
+    newChild->_keys = std::vector<int>(
+        std::make_move_iterator(child->_keys.begin() + t),
+        std::make_move_iterator(child->_keys.end())
+    );
+    child->_keys.resize(t - 1);  // Retain the first `t - 1` keys in the original child
+
+    // If the child is not a leaf, move its children as well
     if (!child->_is_leaf) {
-        // Move the second half of the child pointers to the new child node
-        newChild->_children = {child->_children.begin() + t, child->_children.end()};
-        child->_children = {child->_children.begin(), child->_children.begin() + t};
+        newChild->_children = std::vector<BPTreeNode*>(
+            std::make_move_iterator(child->_children.begin() + t),
+            std::make_move_iterator(child->_children.end())
+        );
+        child->_children.resize(t);  // Retain the first `t` children in the original child
+
+        for (auto* grandchild : newChild->_children) {
+            grandchild->_parent = newChild;
+        }
     }
 
     // Adjust `next` pointers for leaf nodes to maintain linked leaf sequence
@@ -111,10 +109,8 @@ void BPTreeNode::splitChildren(const size_t i) {
         child->_next = newChild;         // Update the old child to point to the new child
     }
 
-    // Insert the middle key from the child into the current node
-    // and insert a pointer to the new child node
-    _keys.insert(_keys.begin() + static_cast<int>(i), child->_keys.back());
-    child->_keys.pop_back();  // Remove the middle key from the old child
+    // Insert the middle key into the parent node and update children
+    _keys.insert(_keys.begin() + static_cast<int>(i), child->_keys[t - 1]); // Move the middle key
     _children.insert(_children.begin() + static_cast<int>(i) + 1, newChild);
 }
 
