@@ -4,6 +4,7 @@
 #include "BinarySearchTrees/binary_search_tree.h"
 #include "AVLTree/avl_tree.h"
 #include "BTrees/b_tree.h"
+#include "BPTrees/b_plus_tree.h"
 #include <iostream>
 
 int main() {
@@ -209,4 +210,85 @@ int main() {
     bTree.remove(5);
     std::cout << "B-Tree after removing \"5\": ";
     bTree.printTree(); // Structure after removing 5
+
+    // ---------------- B+ Tree Example ---------------- //
+    std::cout << "\nB+ Tree:\n";
+
+    // Initialize the B+ Tree with minimum degree t (e.g., t = 3)
+    BPTree bpTree(t);
+
+    // Insert elements into the B+ Tree
+    bpTree.insert(10);
+    bpTree.insert(20);
+    bpTree.insert(5);
+    bpTree.insert(6);
+    bpTree.insert(12);
+    bpTree.printTree();
+    bpTree.insert(30);
+    bpTree.insert(7);
+    bpTree.insert(17);
+    bpTree.insert(3);
+    bpTree.insert(25);
+    bpTree.insert(15);
+    bpTree.insert(16);
+    bpTree.insert(14);
+    bpTree.insert(8);
+    bpTree.insert(9);
+    bpTree.insert(2);
+    bpTree.insert(1);
+    bpTree.insert(4);
+    bpTree.insert(0);
+    bpTree.insert(13);
+    bpTree.insert(-1);
+    bpTree.insert(-2);
+    bpTree.insert(-3);
+
+    // Print the B+ Tree structure
+    std::cout << "B+ Tree after insertions (level-order): " << std::endl;
+    bpTree.printTree(); // Expected to show level-order traversal of B+ Tree
+
+    // Perform search operations on B+ Tree
+    std::cout << "\nDoes number \"6\" exist in the B+ Tree: "
+              << (bpTree.search(6) ? "True" : "False") << std::endl;  // Expected output: True
+
+    std::cout << "Does number \"15\" exist in the B+ Tree: "
+              << (bpTree.search(15) ? "True" : "False") << std::endl;  // Expected output: False
+
+    // Range query example
+    std::cout << "Range Query [5, 20]: ";
+    std::vector<int> rangeResults = bpTree.rangeQuery(5, 20);
+    for (const int& val : rangeResults) {
+        std::cout << val << " ";
+    }
+    std::cout << std::endl; // Expected output: 5 6 7 10 12 17 20
+
+    // Remove elements from the B+ Tree
+    bpTree.remove(6);
+    std::cout << "B+ Tree after removing \"6\": ";
+    bpTree.printTree(); // Should show the structure after removing 6
+
+    bpTree.remove(15); // This element does not exist
+    std::cout << "B+ Tree after attempting to remove \"15\" (nonexistent): ";
+    bpTree.printTree(); // Should show the tree remains unchanged
+
+    bpTree.remove(10);
+    std::cout << "B+ Tree after removing \"10\": ";
+    bpTree.printTree(); // Structure after removing 10
+
+    bpTree.remove(30);
+    std::cout << "B+ Tree after removing \"30\": ";
+    bpTree.printTree(); // Structure after removing 30
+
+    // Additional insertions and queries to verify tree state
+    bpTree.insert(35);
+    bpTree.insert(40);
+    std::cout << R"(B+ Tree after inserting "35" and "40": )";
+    bpTree.printTree(); // Updated tree with new elements
+
+    std::cout << "Range Query [10, 35]: ";
+    rangeResults = bpTree.rangeQuery(10, 35);
+    for (int val : rangeResults) {
+        std::cout << val << " ";
+    }
+    std::cout << std::endl; // Expected output: 12 17 20 25 35
 }
