@@ -5,6 +5,7 @@ from BinarySearchTrees.binary_search_tree import BinarySearchTree
 from AVLTree.avl_tree import AVLTree
 from BTrees.b_tree import BTree
 from BPTrees.b_plus_tree import BPTree
+from FenwickTrees.fenwick_tree import FenwickTree
 
 if __name__ == "__main__":
     # ---------------- Full Binary Tree Example ---------------- #
@@ -99,3 +100,32 @@ if __name__ == "__main__":
 
     print("\nRange Query for values between 10 and 30 after deletions:")
     print(b_plus_tree.range_query(10, 30))  # Expected output: updated values in range 10 to 30
+
+    # ---------------- Fenwick Tree Example ---------------- #
+    print("\n\nFenwick Tree (Binary Indexed Tree):")
+    # Data for the Fenwick Tree
+    fenwick_data = [3, 2, -1, 6, 5, 4, -3, 3, 7, 2]
+
+    # Build the Fenwick Tree from the data
+    fenwick_tree = FenwickTree.build(fenwick_data)
+    print("Original data:", fenwick_data)
+
+    # Query the prefix sum up to index 5
+    prefix_sum_5 = fenwick_tree.query(5)
+    print("Prefix sum up to index 5:", prefix_sum_5)  # Expected: 3 + 2 + -1 + 6 + 5 = 15
+
+    # Range sum query from index 3 to 7
+    range_sum_3_to_7 = fenwick_tree.range_query(3, 7)
+    print("Range sum from index 3 to 7:", range_sum_3_to_7)  # Expected: -1 + 6 + 5 + 4 + -3 = 11
+
+    # Update the value at index 3 by adding 4
+    fenwick_tree.update(3, 4)
+    print("Updated data (value at index 3 increased by 4).")
+
+    # Query the prefix sum again after update
+    updated_prefix_sum_5 = fenwick_tree.query(5)
+    print("Prefix sum up to index 5 after update:", updated_prefix_sum_5)  # Expected: 3 + 2 + 3 + 6 + 5 = 19
+
+    # Range sum query again after update
+    updated_range_sum_3_to_7 = fenwick_tree.range_query(3, 7)
+    print("Range sum from index 3 to 7 after update:", updated_range_sum_3_to_7)  # Expected: 3 + 6 + 5 + 4 + -3 = 15
