@@ -74,3 +74,5 @@ class FenwickTree {
         return fenwick;
     }
 }
+
+module.exports = FenwickTree;
