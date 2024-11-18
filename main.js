@@ -5,6 +5,7 @@ const BinarySearchTree = require("./BinarySearchTrees/binary_search_tree")
 const AVLTree = require("./AVLTree/avl_tree");
 const BTree = require("./BTrees/b_tree");
 const BPTree = require("./BPTrees/b_plus_tree");
+const FenwickTree = require("./FenwickTrees/fenwick_tree");
 
 console.log("Full Binary Tree:");
 
@@ -187,3 +188,34 @@ bPlusTree.printTree();  // Should no longer contain 5
 // Perform another range query in the B+ Tree after deletions
 console.log("\nRange Query for values between 10 and 30 after deletions:");
 console.log(bPlusTree.rangeQuery(10, 30));  // Expected output: Updated values within range [10, 30]
+
+console.log("\nFenwick Tree (Binary Indexed Tree):");
+
+// ---------------- Fenwick Tree Example ---------------- //
+
+// Data for the Fenwick Tree
+const fenwickData = [3, 2, -1, 6, 5, 4, -3, 3, 7, 2];
+
+// Build the Fenwick Tree from the data
+const fenwickTree = FenwickTree.build(fenwickData);
+console.log("Original data:", fenwickData);
+
+// Query the prefix sum up to index 5
+const prefixSum5 = fenwickTree.query(5);
+console.log("Prefix sum up to index 5:", prefixSum5);  // Expected: 15
+
+// Perform a range sum query from index 3 to 7
+const rangeSum3to7 = fenwickTree.rangeQuery(3, 7);
+console.log("Range sum from index 3 to 7:", rangeSum3to7);  // Expected: 11
+
+// Update the value at index 3 by adding 4
+fenwickTree.update(3, 4);
+console.log("Updated value at index 3 by +4.");
+
+// Query the prefix sum again after the update
+const updatedPrefixSum5 = fenwickTree.query(5);
+console.log("Updated prefix sum up to index 5:", updatedPrefixSum5);  // Expected: 19
+
+// Perform another range sum query after the update
+const updatedRangeSum3to7 = fenwickTree.rangeQuery(3, 7);
+console.log("Updated range sum from index 3 to 7:", updatedRangeSum3to7);  // Expected: 15
