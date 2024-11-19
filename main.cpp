@@ -5,6 +5,7 @@
 #include "AVLTree/avl_tree.h"
 #include "BTrees/b_tree.h"
 #include "BPTrees/b_plus_tree.h"
+#include "FenwickTrees/fenwick_tree.h"
 #include <iostream>
 
 int main() {
@@ -244,7 +245,7 @@ int main() {
     bpTree.insert(-3);
 
     // Print the B+ Tree structure
-    std::cout << "B+ Tree after insertions (level-order): " << std::endl;
+    std::cout << "B+ Tree after insertions (level-order): " << std::endl ;
     bpTree.printTree(); // Expected to show level-order traversal of B+ Tree
 
     // Perform search operations on B+ Tree
@@ -287,8 +288,43 @@ int main() {
 
     std::cout << "Range Query [10, 35]: ";
     rangeResults = bpTree.rangeQuery(10, 35);
-    for (int val : rangeResults) {
+    for (const int& val : rangeResults) {
         std::cout << val << " ";
     }
     std::cout << std::endl; // Expected output: 12 17 20 25 35
+
+    // ---------------- Fenwick Tree Example ---------------- //
+    std::cout << "\nFenwick Tree:\n";
+
+    // Initialize the Fenwick Tree with size 10
+    FenwickTree fenwickTree(10);
+
+    // Update values in the Fenwick Tree
+    fenwickTree.update(1, 5);  // Add 5 at index 1
+    fenwickTree.update(2, 3);  // Add 3 at index 2
+    fenwickTree.update(3, 7);  // Add 7 at index 3
+    fenwickTree.update(4, 6);  // Add 6 at index 4
+    fenwickTree.update(5, 2);  // Add 2 at index 5
+
+    // Query prefix sums
+    std::cout << "Prefix sum up to index 1: " << fenwickTree.query(1) << std::endl;  // Expected output: 5
+    std::cout << "Prefix sum up to index 3: " << fenwickTree.query(3) << std::endl;  // Expected output: 15
+    std::cout << "Prefix sum up to index 5: " << fenwickTree.query(5) << std::endl;  // Expected output: 23
+
+    // Range queries
+    std::cout << "Range sum [2, 4]: " << fenwickTree.range_query(2, 4) << std::endl;  // Expected output: 16 (3+7+6)
+    std::cout << "Range sum [1, 5]: " << fenwickTree.range_query(1, 5) << std::endl;  // Expected output: 23
+
+    // Use the static build method to construct a Fenwick Tree from a data array
+    const std::vector<int> data = {0, 5, 3, 7, 6, 2};  // 1-based indexing, index 0 is unused
+    const FenwickTree builtFenwickTree = FenwickTree::build(data);
+
+    // Query prefix sums from the built Fenwick Tree
+    std::cout << "Prefix sum up to index 3 (built tree): " << builtFenwickTree.query(3) << std::endl;  // Expected output: 15
+    std::cout << "Prefix sum up to index 5 (built tree): " << builtFenwickTree.query(5) << std::endl;  // Expected output: 23
+
+    // Range queries on the built Fenwick Tree
+    std::cout << "Range sum [2, 4] (built tree): " << builtFenwickTree.range_query(2, 4) << std::endl;  // Expected output: 16
+    std::cout << "Range sum [1, 5] (built tree): " << builtFenwickTree.range_query(1, 5) << std::endl;  // Expected output: 23
+
 }
