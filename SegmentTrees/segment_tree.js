@@ -12,7 +12,7 @@ class SegmentTree {
         this.func = func; // Associative function (e.g., min, max, sum)
 
         // Determine the identity value based on the function or use a custom one
-        this.identity = identity ??
+        this.identity = identity !== undefined && identity !== null ? identity :
             (func === Math.min ? Infinity :
                 func === Math.max ? -Infinity :
                     func === ((a, b) => a + b) ? 0 : null);
