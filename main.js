@@ -6,6 +6,7 @@ const AVLTree = require("./AVLTree/avl_tree");
 const BTree = require("./BTrees/b_tree");
 const BPTree = require("./BPTrees/b_plus_tree");
 const FenwickTree = require("./FenwickTrees/fenwick_tree");
+const SegmentationTree = require("./SegmentTrees/segment_tree");
 
 console.log("Full Binary Tree:");
 
@@ -219,3 +220,47 @@ console.log("Updated prefix sum up to index 5:", updatedPrefixSum5);  // Expecte
 // Perform another range sum query after the update
 const updatedRangeSum3to7 = fenwickTree.rangeQuery(3, 7);
 console.log("Updated range sum from index 3 to 7:", updatedRangeSum3to7);  // Expected: 15
+
+console.log("\nSegment Tree:");
+
+// ---------------- Segment Tree Example ---------------- //
+
+// Data for the Segment Tree
+const segmentData = [2, 4, 5, 7, 8, 9, 1, 6];
+console.log("Original data:", segmentData);
+
+// Example 1: Segment Tree for Range Minimum Query
+const stMin = new SegmentationTree(segmentData, Math.min, Infinity);
+console.log("\nSegment Tree (Range Minimum Query):");
+
+// Query the minimum value in the range [2, 5)
+console.log("Minimum value in range [2, 5):", stMin.query(2, 5)); // Expected output: 5
+
+// Update the value at index 3 to 3
+stMin.update(3, 3);
+console.log("Updated data (value at index 3 changed to 3).");
+console.log("Minimum value in range [2, 5) after update:", stMin.query(2, 5)); // Expected output: 3
+
+// Example 2: Segment Tree for Range Sum Query
+const stSum = new SegmentationTree(segmentData, (a, b) => a + b, 0);
+console.log("\nSegment Tree (Range Sum Query):");
+
+// Query the sum of values in the range [1, 4)
+console.log("Sum of values in range [1, 4):", stSum.query(1, 4)); // Expected output: 16
+
+// Update the value at index 2 to 10
+stSum.update(2, 10);
+console.log("Updated data (value at index 2 changed to 10).");
+console.log("Sum of values in range [1, 4) after update:", stSum.query(1, 4)); // Expected output: 21
+
+// Example 3: Segment Tree for Range Maximum Query
+const stMax = new SegmentationTree(segmentData, Math.max, -Infinity);
+console.log("\nSegment Tree (Range Maximum Query):");
+
+// Query the maximum value in the range [3, 7)
+console.log("Maximum value in range [3, 7):", stMax.query(3, 7)); // Expected output: 9
+
+// Update the value at index 6 to 20
+stMax.update(6, 20);
+console.log("Updated data (value at index 6 changed to 20).");
+console.log("Maximum value in range [3, 7) after update:", stMax.query(3, 7)); // Expected output: 20
