@@ -32,7 +32,7 @@ public:
      *                     - -Infinity for max queries
      *                     - 0 for sum queries
      */
-    SegmentTree(const std::vector<T>& data, std::function<T(T, T)> func, T* identity = nullptr);
+    SegmentTree(const std::vector<T>& data, std::function<T(T, T)> func, T identity = nullptr);
 
     /**
      * Updates a value at a specific index in the segment tree.
@@ -64,7 +64,7 @@ public:
 
 private:
     int _n;                               // Number of elements in the input array
-    T* identity;                          // Identity value for the associative function
+    T identity;                          // Identity value for the associative function
     std::function<T(T, T)> _func;         // Associative function to combine segments
     std::vector<T> _tree;                 // Flat array representation of the segment tree
 

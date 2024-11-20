@@ -4,7 +4,7 @@
 #include "segment_tree.h"
 
 template <typename T>
-SegmentTree<T>::SegmentTree(const std::vector<T>& data, std::function<T(T, T)> func, T* identity)
+SegmentTree<T>::SegmentTree(const std::vector<T>& data, std::function<T(T, T)> func, T identity)
     : _func(func), identity(identity), _n(data.size()), _tree(2 * data.size(), identity) {
     // Build the tree during construction
     _build(data);
