@@ -6,6 +6,7 @@ from AVLTree.avl_tree import AVLTree
 from BTrees.b_tree import BTree
 from BPTrees.b_plus_tree import BPTree
 from FenwickTrees.fenwick_tree import FenwickTree
+from SegmentTrees.segment_tree import SegmentTree
 
 if __name__ == "__main__":
     # ---------------- Full Binary Tree Example ---------------- #
@@ -129,3 +130,40 @@ if __name__ == "__main__":
     # Range sum query again after update
     updated_range_sum_3_to_7 = fenwick_tree.range_query(3, 7)
     print("Range sum from index 3 to 7 after update:", updated_range_sum_3_to_7)  # Expected: 3 + 6 + 5 + 4 + -3 = 15
+
+    # ---------------- Segment Tree Example ---------------- #
+    print("\n\nSegment Tree:")
+
+    # Data for the Segment Tree
+    segment_data = [2, 4, 5, 7, 8, 9, 1, 6]
+    print("Original data:", segment_data)
+
+    # Segment Tree for range minimum query
+    st_min = SegmentTree(segment_data, func=min)
+    print("\nSegment Tree (Range Minimum Query):")
+    print("Minimum value in range [2, 5):", st_min.query(2, 5))  # Query minimum in the range [2, 5)
+
+    # Update the value at index 3 to 3
+    st_min.update(3, 3)
+    print("Updated data (value at index 3 changed to 3).")
+    print("Minimum value in range [2, 5) after update:", st_min.query(2, 5))
+
+    # Segment Tree for range sum query
+    st_sum = SegmentTree(segment_data, func=lambda x, y: x + y, identity=0)
+    print("\nSegment Tree (Range Sum Query):")
+    print("Sum of values in range [1, 4):", st_sum.query(1, 4))  # Query sum in the range [1, 4)
+
+    # Update the value at index 2 to 10
+    st_sum.update(2, 10)
+    print("Updated data (value at index 2 changed to 10).")
+    print("Sum of values in range [1, 4) after update:", st_sum.query(1, 4))
+
+    # Segment Tree for range maximum query
+    st_max = SegmentTree(segment_data, func=max)
+    print("\nSegment Tree (Range Maximum Query):")
+    print("Maximum value in range [3, 7):", st_max.query(3, 7))  # Query maximum in the range [3, 7)
+
+    # Update the value at index 6 to 20
+    st_max.update(6, 20)
+    print("Updated data (value at index 6 changed to 20).")
+    print("Maximum value in range [3, 7) after update:", st_max.query(3, 7))
