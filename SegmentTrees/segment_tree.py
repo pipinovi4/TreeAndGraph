@@ -28,8 +28,6 @@ class SegmentTree:
         # Build the segment tree from the input data
         self._build(data)
 
-        print(self.tree)
-
     def _build(self, data):
         """
         Build the Segment Tree from the input data.
