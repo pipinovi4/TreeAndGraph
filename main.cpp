@@ -6,6 +6,7 @@
 #include "BTrees/b_tree.h"
 #include "BPTrees/b_plus_tree.h"
 #include "FenwickTrees/fenwick_tree.h"
+#include "SegmentTrees/segment_tree.h"
 #include <iostream>
 
 int main() {
@@ -327,4 +328,74 @@ int main() {
     std::cout << "Range sum [2, 4] (built tree): " << builtFenwickTree.range_query(2, 4) << std::endl;  // Expected output: 16
     std::cout << "Range sum [1, 5] (built tree): " << builtFenwickTree.range_query(1, 5) << std::endl;  // Expected output: 23
 
+        // ---------------- Segment Tree Example ---------------- //
+    std::cout << "\nSegment Tree:\n";
+
+    // Input data for the Segment Tree
+    const std::vector<int> segmentData = {2, 4, 5, 7, 8, 9, 1, 6};
+    std::cout << "Original data: ";
+    for (const auto& val : segmentData) {
+        std::cout << val << " ";
+    }
+    std::cout << std::endl;
+
+    // Define an associative function for range minimum query
+    auto minFunc = [](const int a, const int b) { return std::min(a, b); };
+
+    // Initialize the Segment Tree with the data and function
+    SegmentTree<int> segmentTree(segmentData, minFunc,  std::numeric_limits<int>::max());
+
+    // Perform a range minimum query for the range [2, 5)
+    std::cout << "Minimum value in range [2, 5): "
+              << segmentTree.query(2, 5) << std::endl;  // Expected output: 5
+
+    // Update the value at index 3 to 3
+    segmentTree.update(3, 3);
+    std::cout << "Updated value at index 3 to 3.\n";
+
+    // Perform the same range minimum query again after the update
+    std::cout << "Minimum value in range [2, 5) after update: "
+              << segmentTree.query(2, 5) << std::endl;  // Expected output: 3
+
+    // Example for range sum query
+    std::cout << "\nSegment Tree (Range Sum Query):\n";
+
+    // Define an associative function for range sum
+    auto sumFunc = [](const int a, const int b) { return a + b; };
+
+    // Initialize another Segment Tree for range sum
+    SegmentTree<int> segmentTreeSum(segmentData, sumFunc,  0);
+
+    // Perform a range sum query for the range [1, 4)
+    std::cout << "Sum of values in range [1, 4): "
+              << segmentTreeSum.query(1, 4) << std::endl;  // Expected output: 16 (4 + 5 + 7)
+
+    // Update the value at index 2 to 10
+    segmentTreeSum.update(2, 10);
+    std::cout << "Updated value at index 2 to 10.\n";
+
+    // Perform the same range sum query again after the update
+    std::cout << "Sum of values in range [1, 4) after update: "
+              << segmentTreeSum.query(1, 4) << std::endl;  // Expected output: 21 (4 + 10 + 7)
+
+    // Example for range maximum query
+    std::cout << "\nSegment Tree (Range Maximum Query):\n";
+
+    // Define an associative function for range maximum
+    auto maxFunc = [](const int a, const int b) { return std::max(a, b); };
+
+    // Initialize another Segment Tree for range maximum
+    SegmentTree<int> segmentTreeMax(segmentData, maxFunc, std::numeric_limits<int>::min());
+
+    // Perform a range maximum query for the range [3, 7)
+    std::cout << "Maximum value in range [3, 7): "
+              << segmentTreeMax.query(3, 7) << std::endl;  // Expected output: 9
+
+    // Update the value at index 6 to 20
+    segmentTreeMax.update(6, 20);
+    std::cout << "Updated value at index 6 to 20.\n";
+
+    // Perform the same range maximum query again after the update
+    std::cout << "Maximum value in range [3, 7) after update: "
+              << segmentTreeMax.query(3, 7) << std::endl;  // Expected output: 20
 }
