@@ -7,6 +7,7 @@ from BTrees.b_tree import BTree
 from BPTrees.b_plus_tree import BPTree
 from FenwickTrees.fenwick_tree import FenwickTree
 from SegmentTrees.segment_tree import SegmentTree
+from SplayTrees.splay_tree import SplayTree
 
 if __name__ == "__main__":
     # ---------------- Full Binary Tree Example ---------------- #
@@ -167,3 +168,43 @@ if __name__ == "__main__":
     st_max.update(6, 20)
     print("Updated data (value at index 6 changed to 20).")
     print("Maximum value in range [3, 7) after update:", st_max.query(3, 7))
+
+    # ---------------- Splay Tree Example ---------------- #
+    print("\n\nSplay Tree:")
+
+    # Initialize the Splay Tree
+    splay_tree = SplayTree()
+
+    # Insert values into the Splay Tree
+    for value in [10, 20, 30, 40, 50, 25, 35]:
+        splay_tree.insert(value)
+    print("Inserted values into Splay Tree.")
+
+    # Perform an in-order traversal of the Splay Tree (should return a sorted order of elements)
+    print("In-order traversal of the Splay Tree: ", splay_tree.inorder())
+
+    # Search for a value in the Splay Tree
+    search_value = 25
+    print(f"\nSearching for value {search_value} in Splay Tree...")
+    if splay_tree.search(search_value):
+        print(f"Value {search_value} found and splayed to root.")
+    else:
+        print(f"Value {search_value} not found.")
+
+    # Perform an in-order traversal after splaying
+    print("In-order traversal after search: ", splay_tree.inorder())
+
+    # Delete a value from the Splay Tree
+    delete_value = 40
+    print(f"\nDeleting value {delete_value} from Splay Tree...")
+    splay_tree.delete(delete_value)
+    print(f"Value {delete_value} deleted.")
+
+    # Perform an in-order traversal after deletion
+    print("In-order traversal after deletion: ", splay_tree.inorder())
+
+    # Insert additional values to test tree restructuring
+    print("\nInserting additional values [15, 5, 35] into Splay Tree...")
+    for value in [15, 5, 35]:
+        splay_tree.insert(value)
+    print("In-order traversal after additional insertions: ", splay_tree.inorder())
