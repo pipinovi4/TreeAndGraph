@@ -7,6 +7,7 @@ const BTree = require("./BTrees/b_tree");
 const BPTree = require("./BPTrees/b_plus_tree");
 const FenwickTree = require("./FenwickTrees/fenwick_tree");
 const SegmentationTree = require("./SegmentTrees/segment_tree");
+const SplayTree = require("./SplayTrees/splay_tree");
 
 console.log("Full Binary Tree:");
 
@@ -264,3 +265,54 @@ console.log("Maximum value in range [3, 7):", stMax.query(3, 7)); // Expected ou
 stMax.update(6, 20);
 console.log("Updated data (value at index 6 changed to 20).");
 console.log("Maximum value in range [3, 7) after update:", stMax.query(3, 7)); // Expected output: 20
+
+console.log("\nSplay Tree:");
+
+// ---------------- Splay Tree Example ---------------- //
+
+// Initialize the Splay Tree
+const splayTree = new SplayTree();
+
+// Insert values into the Splay Tree
+const splayValuesToInsert = [15, 10, 20, 5, 12, 16, 25];
+splayValuesToInsert.forEach(value => splayTree.insert(value));
+
+// Print the Splay Tree (in-order traversal shows the sorted order of the tree)
+console.log("In-order traversal of the Splay Tree after insertions:");
+console.log(splayTree.inorder());  // Expected output: [5, 10, 12, 15, 16, 20, 25]
+
+// Perform search operations on the Splay Tree
+console.log(`\nDoes number "12" exist in the Splay Tree? ${splayTree.search(12) ? "Yes" : "No"}`);  // Expected output: Yes
+console.log(`Does number "30" exist in the Splay Tree? ${splayTree.search(30) ? "Yes" : "No"}`);  // Expected output: No
+
+// After a successful search, the found value becomes the root
+console.log("\nIn-order traversal after searching for 12 (it becomes the root):");
+console.log(splayTree.inorder());  // Expected output: [5, 10, 12, 15, 16, 20, 25]
+
+// Perform delete operations on the Splay Tree
+console.log("\nDeleting number 15 from the Splay Tree...");
+splayTree.delete(15);
+console.log("In-order traversal after deleting 15:");
+console.log(splayTree.inorder());  // Expected output: [5, 10, 12, 16, 20, 25]
+
+console.log("\nDeleting number 5 from the Splay Tree...");
+splayTree.delete(5);
+console.log("In-order traversal after deleting 5:");
+console.log(splayTree.inorder());  // Expected output: [10, 12, 16, 20, 25]
+
+console.log("\nDeleting number 25 from the Splay Tree...");
+splayTree.delete(25);
+console.log("In-order traversal after deleting 25:");
+console.log(splayTree.inorder());  // Expected output: [10, 12, 16, 20]
+
+// Test inserting a value that already exists
+console.log("\nInserting number 20 (already exists) into the Splay Tree...");
+splayTree.insert(20);
+console.log("In-order traversal after inserting 20 again:");
+console.log(splayTree.inorder());  // Expected output: [10, 12, 16, 20]
+
+// Insert a new value
+console.log("\nInserting number 30 (new value) into the Splay Tree...");
+splayTree.insert(30);
+console.log("In-order traversal after inserting 30:");
+console.log(splayTree.inorder());  // Expected output: [10, 12, 16, 20, 30]
