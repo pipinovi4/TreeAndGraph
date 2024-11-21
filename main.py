@@ -1,13 +1,13 @@
-from FullBinaryTrees.full_binary_tree import FullBinaryTree
-from CompleteBinaryTrees.complete_binary_tree import CompleteBinaryTree
-from PerfectBinaryTrees.perfect_binary_tree import PerfectBinaryTree
+from FullBinaryTrees.source.full_binary_tree import FullBinaryTree
+from CompleteBinaryTrees.source.complete_binary_tree import CompleteBinaryTree
+from PerfectBinaryTrees.source.perfect_binary_tree import PerfectBinaryTree
 from BinarySearchTrees.binary_search_tree import BinarySearchTree
 from AVLTree.avl_tree import AVLTree
-from BTrees.b_tree import BTree
+from BTrees.source.b_tree import BTree
 from BPTrees.b_plus_tree import BPTree
-from FenwickTrees.fenwick_tree import FenwickTree
-from SegmentTrees.segment_tree import SegmentTree
-from SplayTrees.splay_tree import SplayTree
+from FenwickTrees.source.fenwick_tree import FenwickTree
+from SegmentTrees.source.segment_tree import SegmentTree
+from SplayTrees.source.splay_tree import SplayTree
 
 if __name__ == "__main__":
     # ---------------- Full Binary Tree Example ---------------- #

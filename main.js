@@ -1,13 +1,13 @@
-const FullBinaryTree = require('./FullBinaryTrees/full_binary_tree');
-const CompleteBinaryTree = require('./CompleteBinaryTrees/complete_binary_tree');
-const PerfectBinaryTree = require('./PerfectBinaryTrees/perfect_binary_tree');
-const BinarySearchTree = require("./BinarySearchTrees/binary_search_tree")
-const AVLTree = require("./AVLTree/avl_tree");
-const BTree = require("./BTrees/b_tree");
-const BPTree = require("./BPTrees/b_plus_tree");
-const FenwickTree = require("./FenwickTrees/fenwick_tree");
-const SegmentationTree = require("./SegmentTrees/segment_tree");
-const SplayTree = require("./SplayTrees/splay_tree");
+const FullBinaryTree = require('./FullBinaryTrees/source/full_binary_tree');
+const CompleteBinaryTree = require('./CompleteBinaryTrees/source/complete_binary_tree');
+const PerfectBinaryTree = require('./PerfectBinaryTrees/source/perfect_binary_tree');
+const BinarySearchTree = require("./BinarySearchTrees/source/binary_search_tree")
+const AVLTree = require("./AVLTree/source/avl_tree");
+const BTree = require("./BTrees/source/b_tree");
+const BPTree = require("./BPTrees/source/b_plus_tree");
+const FenwickTree = require("./FenwickTrees/source/fenwick_tree");
+const SegmentationTree = require("./SegmentTrees/source/segment_tree");
+const SplayTree = require("./SplayTrees/source/splay_tree");
 
 console.log("Full Binary Tree:");
 

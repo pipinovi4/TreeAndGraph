@@ -1,12 +1,13 @@
-#include "FullBinaryTrees/full_binary_tree.h"
-#include "CompleteBinaryTrees/complete_binary_tree.h"
-#include "PerfectBinaryTrees/perfect_binary_tree.h"
-#include "BinarySearchTrees/binary_search_tree.h"
-#include "AVLTree/avl_tree.h"
-#include "BTrees/b_tree.h"
-#include "BPTrees/b_plus_tree.h"
-#include "FenwickTrees/fenwick_tree.h"
-#include "SegmentTrees/segment_tree.h"
+#include "FullBinaryTrees/source/full_binary_tree.h"
+#include "CompleteBinaryTrees/source/complete_binary_tree.h"
+#include "PerfectBinaryTrees/source/perfect_binary_tree.h"
+#include "BinarySearchTrees/source/binary_search_tree.h"
+#include "AVLTree/source/avl_tree.h"
+#include "BTrees/source/b_tree.h"
+#include "BPTrees/source/b_plus_tree.h"
+#include "FenwickTrees/source/fenwick_tree.h"
+#include "SegmentTrees/source/segment_tree.h"
+#include "SplayTrees/source/splay_tree.h"
 #include <iostream>
 
 int main() {
@@ -397,5 +398,45 @@ int main() {
 
     // Perform the same range maximum query again after the update
     std::cout << "Maximum value in range [3, 7) after update: "
-              << segmentTreeMax.query(3, 7) << std::endl;  // Expected output: 20
+              << segmentTreeMax.query(3, 7) << std::endl;  // Expected output: 2
+
+    // ---------------- Splay Tree Example ---------------- //
+    std::cout << "\nSplay Tree:\n";
+
+    // Initialize the Splay Tree
+    SplayTree splayTree;
+
+    // Insert elements into the Splay Tree
+    splayTree.insert(10);
+    splayTree.insert(20);
+    splayTree.insert(5);
+    splayTree.insert(15);
+    splayTree.insert(25);
+
+    // Perform search operations on Splay Tree
+    Node* foundNode = splayTree.search(15);
+    if (foundNode) {
+        std::cout << "Element 15 found in the Splay Tree." << std::endl;
+    } else {
+        std::cout << "Element 15 not found in the Splay Tree." << std::endl;
+    }
+
+    foundNode = splayTree.search(30);
+    if (foundNode) {
+        std::cout << "Element 30 found in the Splay Tree." << std::endl;
+    } else {
+        std::cout << "Element 30 not found in the Splay Tree." << std::endl;
+    }
+
+    // Remove an element from the Splay Tree
+    splayTree.remove(10);
+    std::cout << "Element 10 removed from the Splay Tree." << std::endl;
+
+    // Perform in-order traversal of the Splay Tree
+    std::vector<int> inorderTraversal = splayTree.inorder();
+    std::cout << "In-order traversal of the Splay Tree: ";
+    for (int value : inorderTraversal) {
+        std::cout << value << " ";
+    }
+    std::cout << std::endl;
 }
