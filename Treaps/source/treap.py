@@ -5,24 +5,29 @@ import random
 class Treap:
     """
     A Treap is a randomized binary search tree that maintains both BST and heap properties.
-    Each node has a key and a priority, where the tree remains a valid BST by key and a max-heap by priority.
+    Each node has a key and a priority, ensuring:
+    - Binary Search Tree (BST) property: Keys in the left subtree are smaller, and keys in the right subtree are larger.
+    - Max-Heap property: Each node's priority is greater than or equal to the priorities of its children.
+
+    Treap combine the benefits of BSTs and heaps, making them useful for maintaining sorted dynamic data
+    structures with randomization to ensure balanced tree properties.
     """
 
-    priority_counter = 0  # Counter for generating unique priorities
+    priority_counter = 0  # Counter for generating unique priorities to avoid collisions
 
     def __init__(self):
         """
-        Initialize an empty Treap with no root.
+        Initialize an empty Treap with no root node.
         """
         self.root = None
 
     @staticmethod
     def _rotate_right(node):
         """
-        Perform a right rotation on the given node.
+        Perform a right rotation on the given node to maintain the heap property.
 
         :param node: The node to rotate.
-        :return: The new root after rotation.
+        :return: The new root of the subtree after rotation.
         """
         left_child = node.left
         node.left = left_child.right
@@ -32,10 +37,10 @@ class Treap:
     @staticmethod
     def _rotate_left(node):
         """
-        Perform a left rotation on the given node.
+        Perform a left rotation on the given node to maintain the heap property.
 
         :param node: The node to rotate.
-        :return: The new root after rotation.
+        :return: The new root of the subtree after rotation.
         """
         right_child = node.right
         node.right = right_child.left
@@ -45,9 +50,9 @@ class Treap:
     @staticmethod
     def _generate_unique_priority(base_priority=None):
         """
-        Generate a unique priority to avoid collisions.
+        Generate a unique priority to avoid collisions between nodes.
 
-        :param base_priority: Optional base priority (default: random integer).
+        :param base_priority: Optional base priority (default is a randomly generated integer).
         :return: A unique priority value.
         """
         if base_priority is None:
@@ -58,24 +63,24 @@ class Treap:
 
     def insert(self, key, priority=None):
         """
-        Insert a key into the Treap while maintaining BST and heap properties.
+        Insert a key into the Treap while maintaining both BST and heap properties.
 
         :param key: The key to insert.
-        :param priority: (Optional) Priority for the node (randomly generated if not provided).
+        :param priority: Optional priority for the node (a random priority is generated if not provided).
         """
         if priority is None:
             priority = self._generate_unique_priority()
 
-        # Insert the node in the BST
+        # Create the new node to insert
         new_node = TreapNode(key, priority)
         if self.root is None:
-            self.root = new_node
+            self.root = new_node  # If the tree is empty, the new node becomes the root
             return
 
-        # Locate the position to insert
+        # Traverse the tree to find the correct position for the new node
         parent = None
         current = self.root
-        stack = []  # Stack to keep track of the path
+        stack = []  # Stack to keep track of the path for rotations
 
         while current:
             parent = current
@@ -91,20 +96,20 @@ class Treap:
                     break
                 current = current.right
             else:
-                # Key already exists, do nothing
+                # Key already exists; no insertion needed
                 return
 
-        # Rebalanced the tree to maintain the heap property
+        # Rebalance the tree to maintain the heap property
         current = new_node
         while stack:
             parent = stack.pop()
-            if parent.priority < current.priority:
+            if parent.priority < current.priority:  # Heap violation detected
                 if parent.left == current:
                     rotated = self._rotate_right(parent)
                 else:
                     rotated = self._rotate_left(parent)
 
-                # Update parent references
+                # Update parent's reference in the stack
                 if stack:
                     grandparent = stack[-1]
                     if grandparent.left == parent:
@@ -112,7 +117,7 @@ class Treap:
                     else:
                         grandparent.right = rotated
                 else:
-                    self.root = rotated
+                    self.root = rotated  # Update the root if the parent was the root
             else:
                 break
 
@@ -134,7 +139,7 @@ class Treap:
                 current = current.right
 
         if current is None:
-            # Key not found
+            # Key not found; nothing to delete
             return
 
         # Rotate the node until it has at most one child
@@ -144,7 +149,7 @@ class Treap:
             else:
                 rotated = self._rotate_left(current)
 
-            # Update the parent's reference
+            # Update parent's reference after rotation
             if parent is None:
                 self.root = rotated
             elif parent.left == current:
@@ -154,7 +159,7 @@ class Treap:
 
             parent = rotated
 
-        # Remove the node
+        # Remove the node (it has at most one child at this point)
         if parent is None:
             self.root = current.left or current.right
         elif parent.left == current:
@@ -172,18 +177,18 @@ class Treap:
         current = self.root
         while current:
             if key == current.key:
-                return True
+                return True  # Key found
             elif key < current.key:
                 current = current.left
             else:
                 current = current.right
-        return False
+        return False  # Key not found
 
     def inorder(self):
         """
-        Perform an in-order traversal of the Treap.
+        Perform an in-order traversal of the Treap to retrieve keys in sorted order.
 
-        :return: List of (key, priority) pairs in sorted key order.
+        :return: List of tuples (key, priority) in sorted order.
         """
         result = []
         stack = []
@@ -206,11 +211,11 @@ class Treap:
 
     def print_tree(self, node=None, level=0, prefix="Root: "):
         """
-        Print the Treap structure for debugging.
+        Print the Treap structure for debugging purposes.
 
-        :param node: The current node (default is the root).
+        :param node: The current node to print (default is the root).
         :param level: The current level in the tree.
-        :param prefix: The prefix string for the current node.
+        :param prefix: Prefix string to indicate the role of the node (e.g., "Root", "L---", "R---").
         """
         if node is None:
             node = self.root
@@ -219,4 +224,3 @@ class Treap:
         print("    " * level + f"{prefix}({node.key}, {node.priority})")
         if node.left:
             self.print_tree(node.left, level + 1, "L--- ")
-
