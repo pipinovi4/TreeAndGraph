@@ -1,13 +1,14 @@
 from FullBinaryTrees.source.full_binary_tree import FullBinaryTree
 from CompleteBinaryTrees.source.complete_binary_tree import CompleteBinaryTree
 from PerfectBinaryTrees.source.perfect_binary_tree import PerfectBinaryTree
-from BinarySearchTrees.binary_search_tree import BinarySearchTree
-from AVLTree.avl_tree import AVLTree
+from BinarySearchTrees.source.binary_search_tree import BinarySearchTree
+from AVLTree.source.avl_tree import AVLTree
 from BTrees.source.b_tree import BTree
-from BPTrees.b_plus_tree import BPTree
+from BPTrees.source.b_plus_tree import BPTree
 from FenwickTrees.source.fenwick_tree import FenwickTree
 from SegmentTrees.source.segment_tree import SegmentTree
 from SplayTrees.source.splay_tree import SplayTree
+from Treaps.source.treap import Treap
 
 if __name__ == "__main__":
     # ---------------- Full Binary Tree Example ---------------- #
@@ -208,3 +209,43 @@ if __name__ == "__main__":
     for value in [15, 5, 35]:
         splay_tree.insert(value)
     print("In-order traversal after additional insertions: ", splay_tree.inorder())
+
+    # ---------------- Treap Example ---------------- #
+    print("\n\nTreap Tree:")
+
+    # Initialize the Treap
+    treap_tree = Treap()
+
+    # Insert values into the Treap
+    for value in [10, 20, 5, 15, 30, 25, 35, 16]:
+        treap_tree.insert(value)
+    print("Inserted values into Treap.")
+
+    # Perform an in-order traversal of the Treap (should return a sorted order of elements with priorities)
+    print("In-order traversal of the Treap (key, priority):")
+    print(treap_tree.inorder())
+
+    # Search for a value in the Treap
+    search_value = 15
+    print(f"\nSearching for value {search_value} in Treap...")
+    if treap_tree.search(search_value):
+        print(f"Value {search_value} found.")
+    else:
+        print(f"Value {search_value} not found.")
+
+    # Delete a value from the Treap
+    delete_value = 20
+    print(f"\nDeleting value {delete_value} from Treap...")
+    treap_tree.delete(delete_value)
+    print(f"Value {delete_value} deleted.")
+
+    # Perform an in-order traversal after deletion
+    print("In-order traversal after deletion:")
+    print(treap_tree.inorder())
+
+    # Insert additional values to test tree restructuring
+    print("\nInserting additional values [18, 3, 40] into Treap...")
+    for value in [18, 3, 40]:
+        treap_tree.insert(value)
+    print("In-order traversal after additional insertions (key, priority):")
+    print(treap_tree.inorder())
