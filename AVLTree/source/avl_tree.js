@@ -1,4 +1,4 @@
-const Node = require("../Nodes/defaultNodes/node");
+const Node = require("../../Nodes/defaultNodes/node");
 
 /**
  * AVLTree class implementing a self-balancing binary search tree (AVL Tree).
