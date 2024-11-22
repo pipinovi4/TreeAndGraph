@@ -8,6 +8,7 @@ const BPTree = require("./BPTrees/source/b_plus_tree");
 const FenwickTree = require("./FenwickTrees/source/fenwick_tree");
 const SegmentationTree = require("./SegmentTrees/source/segment_tree");
 const SplayTree = require("./SplayTrees/source/splay_tree");
+const TreapTree = require("./Treaps/source/treap");
 
 console.log("Full Binary Tree:");
 
@@ -316,3 +317,41 @@ console.log("\nInserting number 30 (new value) into the Splay Tree...");
 splayTree.insert(30);
 console.log("In-order traversal after inserting 30:");
 console.log(splayTree.inorder());  // Expected output: [10, 12, 16, 20, 30]
+
+console.log("\nTreap Tree:");
+
+// ---------------- Treap Example ---------------- //
+
+// Initialize the Treap Tree
+const treapTree = new TreapTree();
+
+// Insert values into the Treap
+const treapValuesToInsert = [15, 10, 20, 5, 12, 16, 25];
+treapValuesToInsert.forEach(value => treapTree.insert(value));
+
+// Print the Treap Tree (in-order traversal shows the sorted order of the tree along with priorities)
+console.log("In-order traversal of the Treap Tree after insertions:");
+console.log(treapTree.inorder());
+// Expected output: List of objects with key and priority in sorted order by key
+
+// Perform search operations on the Treap Tree
+console.log(`\nDoes number "12" exist in the Treap Tree? ${treapTree.search(12) ? "Yes" : "No"}`);  // Expected output: Yes
+console.log(`Does number "30" exist in the Treap Tree? ${treapTree.search(30) ? "Yes" : "No"}`);  // Expected output: No
+
+// Delete a value from the Treap Tree
+console.log("\nDeleting number 15 from the Treap Tree...");
+treapTree.delete(15);
+console.log("In-order traversal after deleting 15:");
+console.log(treapTree.inorder());
+// Expected output: List of objects without key 15
+
+// Insert a new value into the Treap Tree
+console.log("\nInserting number 30 (new value) into the Treap Tree...");
+treapTree.insert(30);
+console.log("In-order traversal after inserting 30:");
+console.log(treapTree.inorder());
+// Expected output: List of objects with key 30 added
+
+// Print the structure of the Treap Tree for debugging
+console.log("\nTreap Tree Structure:");
+treapTree.printTree();
