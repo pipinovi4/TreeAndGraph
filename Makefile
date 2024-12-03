@@ -1,119 +1,122 @@
 # Build Directory
 BUILD_DIR = build
 
-# C++ Executables
-CPP_EXECUTABLES = \
-	$(BUILD_DIR)/avl_tree \
-	$(BUILD_DIR)/b_tree \
-	$(BUILD_DIR)/bplus_tree \
-	$(BUILD_DIR)/binary_search_tree \
-	$(BUILD_DIR)/complete_binary_tree \
-	$(BUILD_DIR)/fenwick_tree \
-	$(BUILD_DIR)/full_binary_tree \
-	$(BUILD_DIR)/perfect_binary_tree \
-	$(BUILD_DIR)/segment_tree \
-	$(BUILD_DIR)/splay_tree \
-	$(BUILD_DIR)/treap
+# List of C++ Trees (lowercase to match the pattern)
+CPP_TREES = avl_tree b_tree bplus_tree binary_search_tree complete_binary_tree \
+             fenwick_tree full_binary_tree perfect_binary_tree segment_tree \
+             splay_tree treap
 
-# Python Scripts
-PYTHON_SCRIPTS = \
-	AVLTree/avl_tree.py \
-	BTrees/b_tree.py \
-	BPTrees/bplus_tree.py \
-	BinarySearchTrees/binary_search_tree.py \
-	CompleteBinaryTrees/complete_binary_tree.py \
-	FenwickTrees/fenwick_tree.py \
-	FullBinaryTrees/full_binary_tree.py \
-	PerfectBinaryTrees/perfect_binary_tree.py \
-	SegmentTrees/segment_tree.py \
-	SplayTrees/splay_tree.py \
-	Treaps/treap.py
+# Default target: Build everything
+all: build $(CPP_TREES:%=$(BUILD_DIR)/%)
 
-# JavaScript Scripts
-JS_SCRIPTS = \
-	AVLTree/avl_tree.js \
-	BTrees/b_tree.js \
-	BPTrees/bplus_tree.js \
-	BinarySearchTrees/binary_search_tree.js \
-	CompleteBinaryTrees/complete_binary_tree.js \
-	FenwickTrees/fenwick_tree.js \
-	FullBinaryTrees/full_binary_tree.js \
-	PerfectBinaryTrees/perfect_binary_tree.js \
-	SegmentTrees/segment_tree.js \
-	SplayTrees/splay_tree.js \
-	Treaps/treap.js
-
-# Default target: Build and prepare everything
-all: $(CPP_EXECUTABLES)
+.PHONY: build clean
 
 # Build Rules for C++ Executables
-$(BUILD_DIR)/avl_tree: AVLTree/cpp/main.cpp AVLTree/cpp/avl_tree.cpp Nodes/defaultNodes/node.cpp
+$(BUILD_DIR)/%: %/source/%.cpp Nodes/defaultNodes/node.tpp
 	@mkdir -p $(BUILD_DIR)
 	g++ -o $@ $^
 
-$(BUILD_DIR)/b_tree: BTrees/cpp/main.cpp BTrees/cpp/b_tree.cpp Nodes/defaultNodes/node.cpp
-	@mkdir -p $(BUILD_DIR)
-	g++ -o $@ $^
+# Run C++ Example for a Specific Tree
+run-cpp-%: $(BUILD_DIR)/%
+	@echo "Running C++ example for $<..."
+	@$<
 
-$(BUILD_DIR)/bplus_tree: BPTrees/cpp/main.cpp BPTrees/cpp/bplus_tree.cpp Nodes/defaultNodes/node.cpp
-	@mkdir -p $(BUILD_DIR)
-	g++ -o $@ $^
+# Python Script for Each Tree (Individual Rules)
+run-py-AVLTree: AVLTrees/examples/avl_tree_example.py
+	@echo "Running Python example for AVL Tree..."
+	@python PYTHONPATH=AVLTrees/examplesavl_tree_example.py
 
-$(BUILD_DIR)/binary_search_tree: BinarySearchTrees/cpp/main.cpp BinarySearchTrees/cpp/binary_search_tree.cpp Nodes/defaultNodes/node.cpp
-	@mkdir -p $(BUILD_DIR)
-	g++ -o $@ $^
+run-py-BTree: BTrees/examples/b_tree_example.py
+	@echo "Running Python example for BTree..."
+	@python $<
 
-$(BUILD_DIR)/complete_binary_tree: CompleteBinaryTrees/cpp/main.cpp CompleteBinaryTrees/cpp/complete_binary_tree.cpp Nodes/defaultNodes/node.cpp
-	@mkdir -p $(BUILD_DIR)
-	g++ -o $@ $^
+run-py-BPTree: BPTrees/examples/b_plus_tree_example.py
+	@echo "Running Python example for BPlusTree..."
+	@python $<
 
-$(BUILD_DIR)/fenwick_tree: FenwickTrees/cpp/main.cpp FenwickTrees/cpp/fenwick_tree.cpp Nodes/defaultNodes/node.cpp
-	@mkdir -p $(BUILD_DIR)
-	g++ -o $@ $^
+run-py-BinarySearchTree: BinarySearchTrees/examples/binary_search_tree_example.py
+	@echo "Running Python example for BinarySearchTree..."
+	@python $<
 
-$(BUILD_DIR)/full_binary_tree: FullBinaryTrees/cpp/main.cpp FullBinaryTrees/cpp/full_binary_tree.cpp Nodes/defaultNodes/node.cpp
-	@mkdir -p $(BUILD_DIR)
-	g++ -o $@ $^
+run-py-CompleteBinaryTree: CompleteBinaryTrees/examples/complete_binary_tree_example.py
+	@echo "Running Python example for CompleteBinaryTree..."
+	@python $<
 
-$(BUILD_DIR)/perfect_binary_tree: PerfectBinaryTrees/cpp/main.cpp PerfectBinaryTrees/cpp/perfect_binary_tree.cpp Nodes/defaultNodes/node.cpp
-	@mkdir -p $(BUILD_DIR)
-	g++ -o $@ $^
+run-py-FenwickTree: FenwickTrees/examples/fenwick_tree_example.py
+	@echo "Running Python example for FenwickTree..."
+	@python $<
 
-$(BUILD_DIR)/segment_tree: SegmentTrees/cpp/main.cpp SegmentTrees/cpp/segment_tree.cpp Nodes/defaultNodes/node.cpp
-	@mkdir -p $(BUILD_DIR)
-	g++ -o $@ $^
+run-py-FullBinaryTree: FullBinaryTrees/examples/full_binary_tree_example.py
+	@echo "Running Python example for FullBinaryTree..."
+	@python $<
 
-$(BUILD_DIR)/splay_tree: SplayTrees/cpp/main.cpp SplayTrees/cpp/splay_tree.cpp Nodes/defaultNodes/node.cpp
-	@mkdir -p $(BUILD_DIR)
-	g++ -o $@ $^
+run-py-PerfectBinaryTree: PerfectBinaryTrees/examples/perfect_binary_tree_example.py
+	@echo "Running Python example for PerfectBinaryTree..."
+	@python $<
 
-$(BUILD_DIR)/treap: Treaps/cpp/main.cpp Treaps/cpp/treap.cpp Nodes/defaultNodes/node.cpp
-	@mkdir -p $(BUILD_DIR)
-	g++ -o $@ $^
+run-py-SegmentTree: SegmentTrees/examples/segment_tree_example.py
+	@echo "Running Python example for SegmentTree..."
+	@python $<
 
-# Run Rules for Python
-run-python:
-	@echo "Running Python Scripts..."
-	@for script in $(PYTHON_SCRIPTS); do \
-		echo "Running $$script"; \
-		python $$script; \
-	done
+run-py-SplayTree: SplayTrees/examples/splay_tree_example.py
+	@echo "Running Python example for SplayTree..."
+	@python $<
 
-# Run Rules for JavaScript
-run-js:
-	@echo "Running JavaScript Scripts..."
-	@for script in $(JS_SCRIPTS); do \
-		echo "Running $$script"; \
-		node $$script; \
-	done
+run-py-Treap: Treaps/examples/treap_example.py
+	@echo "Running Python example for Treap..."
+	@python $<
 
-# Run Rules for C++
-run-cpp:
-	@echo "Running C++ Executables..."
-	@for exe in $(CPP_EXECUTABLES); do \
-		echo "Running $$exe"; \
-		$$exe; \
-	done
+# JavaScript Script for Each Tree (Individual Rules)
+run-js-AVLTree: AVLTree/examples/avl_tree_example.js
+	@echo "Running JavaScript example for AVL Tree..."
+	@node $<
+
+run-js-BTree: BTrees/examples/b_tree_example.js
+	@echo "Running JavaScript example for BTree..."
+	@node $<
+
+run-js-BPTree: BPTrees/examples/b_plus_tree_example.js
+	@echo "Running JavaScript example for BPlusTree..."
+	@node $<
+
+run-js-BinarySearchTree: BinarySearchTrees/examples/binary_search_tree_example.js
+	@echo "Running JavaScript example for BinarySearchTree..."
+	@node $<
+
+run-js-CompleteBinaryTree: CompleteBinaryTrees/examples/complete_binary_tree_example.js
+	@echo "Running JavaScript example for CompleteBinaryTree..."
+	@node $<
+
+run-js-FenwickTree: FenwickTrees/examples/fenwick_tree_example.js
+	@echo "Running JavaScript example for FenwickTree..."
+	@node $<
+
+run-js-FullBinaryTree: FullBinaryTrees/examples/full_binary_tree_example.js
+	@echo "Running JavaScript example for FullBinaryTree..."
+	@node $<
+
+run-js-PerfectBinaryTree: PerfectBinaryTrees/examples/perfect_binary_tree_example.js
+	@echo "Running JavaScript example for PerfectBinaryTree..."
+	@node $<
+
+run-js-SegmentTree: SegmentTrees/examples/segment_tree_example.js
+	@echo "Running JavaScript example for SegmentTree..."
+	@node $<
+
+run-js-SplayTree: SplayTrees/examples/splay_tree_example.js
+	@echo "Running JavaScript example for SplayTree..."
+	@node $<
+
+run-js-Treap: Treaps/examples/treap_example.js
+	@echo "Running JavaScript example for Treap..."
+	@node $<
+
+# Build the project
+build:
+	@echo "Cleaning build directory..."
+	rm -rf $(BUILD_DIR)
+	@echo "Running CMake build..."
+	mkdir build && cd $(BUILD_DIR) && cmake .. && cmake --build .
 
 # Clean Build Artifacts
 clean:
