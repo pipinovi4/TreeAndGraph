@@ -1,6 +1,7 @@
 #ifndef COMPLETE_BINARY_TREE_TPP
 #define COMPLETE_BINARY_TREE_TPP
 
+#include <iostream>                // Include iostream for displaying data in terminal
 #include "complete_binary_tree.h"  // Include the header file for CompleteBinaryTree
 #include <cmath>                   // Include cmath for mathematical functions
 #include <algorithm>               // Include algorithm for standard algorithms like std::any_of
