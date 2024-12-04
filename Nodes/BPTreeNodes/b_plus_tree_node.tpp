@@ -2,6 +2,8 @@
 #define B_PLUS_TREE_NODE_TPP
 
 #include "b_plus_tree_node.h"
+#include <iostream>
+#include <algorithm>
 
 // Constructor for BPTreeNode
 // Initializes a new node with a specified minimum degree and a leaf status
