@@ -1,8 +1,10 @@
 #ifndef B_TREE_NODE_TPP
 #define B_TREE_NODE_TPP
 
-#include <array>
 #include "b_tree_node.h"
+#include <iostream>
+#include <queue>
+#include <array>
 #include <stack>
 
 // Constructor to initialize a B-tree node
