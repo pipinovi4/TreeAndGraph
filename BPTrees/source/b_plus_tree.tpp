@@ -4,6 +4,8 @@
 #include "b_plus_tree.h"
 #include <stack>
 #include <algorithm>
+#include <iostream>
+#include <queue>
 
 // Constructor of the BPTree
 BPTree::BPTree(const size_t t) {
