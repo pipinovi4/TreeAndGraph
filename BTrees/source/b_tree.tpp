@@ -3,6 +3,7 @@
 
 #include "b_tree.h"
 #include <stack>
+#include <iostream>
 
 // Constructor for BTree: Initializes an empty B-Tree with a root node
 BTree::BTree(const int& t) {
