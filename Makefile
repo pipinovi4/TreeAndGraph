@@ -24,7 +24,7 @@ run-cpp-%: $(BUILD_DIR)/%
 # Python Script for Each Tree (Individual Rules)
 run-py-AVLTree: AVLTrees/examples/avl_tree_example.py
 	@echo "Running Python example for AVL Tree..."
-	@python PYTHONPATH=AVLTrees/examplesavl_tree_example.py
+	@python $<
 
 run-py-BTree: BTrees/examples/b_tree_example.py
 	@echo "Running Python example for BTree..."
@@ -122,3 +122,25 @@ build:
 clean:
 	@echo "Cleaning up build directory..."
 	rm -rf $(BUILD_DIR)
+
+# Path to your virtual environment
+VENV_PATH = .venv
+
+# Target to add dynamic PYTHONPATH export to the venv activate script
+add-pythonpath:
+	@echo "Adding dynamic PYTHONPATH to $(VENV_PATH)/bin/activate"
+	@echo 'export PYTHONPATH=$$(pwd)' >> $(VENV_PATH)/bin/activate
+	@echo "Dynamic PYTHONPATH added."
+
+# Target to create a virtual environment and add PYTHONPATH
+setup-venv:
+	@echo "Creating virtual environment..."
+	python3 -m venv $(VENV_PATH)
+	$(MAKE) add-pythonpath
+	@echo "Virtual environment setup completed."
+
+# Clean the virtual environment (optional)
+clean-venv:
+	@echo "Removing virtual environment..."
+	rm -rf $(VENV_PATH)
+	@echo "Virtual environment removed."
