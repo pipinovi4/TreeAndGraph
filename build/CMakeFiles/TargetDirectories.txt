@@ -1,3 +1,0 @@
-/root/TreesAndGraphs/build/CMakeFiles/TreesAndGraphs.dir
-/root/TreesAndGraphs/build/CMakeFiles/edit_cache.dir
-/root/TreesAndGraphs/build/CMakeFiles/rebuild_cache.dir
