@@ -8,132 +8,53 @@ project(TreesAndGraphs)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# List of all example executables
-set(EXAMPLES
-        BinarySearchTree
-        AVLTree
-        BTree
-        BPTree
-        CompleteBinaryTree
-        FullBinaryTree
-        PerfectBinaryTree
-        FenwickTree
-        SegmentTree
-        SplayTree
-        TreapTree
+# Common include directory
+set(COMMON_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/inc")
+include_directories(${COMMON_INCLUDE_DIR})
+
+# List of tree modules and their corresponding file prefixes
+set(TREE_MODULES_AND_FILES
+        BinarySearchTrees binary_search_tree
+        AVLTrees avl_tree
+        BTrees b_tree
+        BPTrees b_plus_tree
+        CompleteBinaryTrees complete_binary_tree
+        FullBinaryTrees full_binary_tree
+        PerfectBinaryTrees perfect_binary_tree
+        FenwickTrees fenwick_tree
+        SegmentTrees segment_tree
+        SplayTrees splay_tree
+        Treaps treap
 )
 
-# Include directories for all targets
-include_directories(${CMAKE_SOURCE_DIR}/Nodes/defaultNodes)
-include_directories(${CMAKE_SOURCE_DIR}/Nodes/BTreeNodes)
-include_directories(${CMAKE_SOURCE_DIR}/Nodes/BPTreeNodes)
-include_directories(${CMAKE_SOURCE_DIR}/Nodes/TreapNode)
+# Helper function to collect sources and headers for a tree module
+macro(add_tree_executable MODULE_NAME FILE_PREFIX)
+    # Add executable for the tree module
+    add_executable(${MODULE_NAME}_example
+            ${MODULE_NAME}/examples/${FILE_PREFIX}_example.cpp
+            ${MODULE_NAME}/include/${FILE_PREFIX}.h
+            ${MODULE_NAME}/source/${FILE_PREFIX}.tpp
+    )
+    # Include source and common include directories
+    target_include_directories(${MODULE_NAME}_example PRIVATE
+            ${CMAKE_SOURCE_DIR}/${MODULE_NAME}/source
+            ${COMMON_INCLUDE_DIR}
+    )
+endmacro()
 
-# Add main TreesAndGraphs executable (optional if combining everything)
-add_executable(TreesAndGraphs
-        main.cpp
-        # Add all source/header files needed for the main executable
-        AVLTrees/source/avl_tree.h
-        AVLTrees/source/avl_tree.tpp
-        BinarySearchTrees/source/binary_search_tree.h
-        BinarySearchTrees/source/binary_search_tree.tpp
-        BPTrees/source/b_plus_tree.h
-        BPTrees/source/b_plus_tree.tpp
-        BTrees/source/b_tree.h
-        BTrees/source/b_tree.tpp
-        CompleteBinaryTrees/source/complete_binary_tree.h
-        CompleteBinaryTrees/source/complete_binary_tree.tpp
-        FenwickTrees/source/fenwick_tree.h
-        FenwickTrees/source/fenwick_tree.tpp
-        FullBinaryTrees/source/full_binary_tree.h
-        FullBinaryTrees/source/full_binary_tree.tpp
-        Nodes/defaultNodes/node.h
-        Nodes/defaultNodes/node.tpp
-        Nodes/BPTreeNodes/b_plus_tree_node.h
-        Nodes/BPTreeNodes/b_plus_tree_node.tpp
-        Nodes/BTreeNodes/b_tree_node.h
-        Nodes/BTreeNodes/b_tree_node.tpp
-        PerfectBinaryTrees/source/perfect_binary_tree.h
-        PerfectBinaryTrees/source/perfect_binary_tree.tpp
-        SegmentTrees/source/segment_tree.h
-        SegmentTrees/source/segment_tree.tpp
-        SplayTrees/source/splay_tree.h
-        SplayTrees/source/splay_tree.tpp
-        Treaps/source/treap.h
-        Treaps/source/treap.tpp
-)
+# Loop over all tree modules and add their executables
+list(LENGTH TREE_MODULES_AND_FILES num_items)
+math(EXPR num_modules "${num_items} / 2 - 1")
 
-# Add executables for all tree structures with proper paths and files
-add_executable(BinarySearchTree
-        BinarySearchTrees/examples/binary_search_tree_example.cpp
-        BinarySearchTrees/source/binary_search_tree.h
-        BinarySearchTrees/source/binary_search_tree.tpp
-)
+foreach(idx RANGE 0 ${num_modules})
+    math(EXPR module_idx "${idx} * 2")
+    math(EXPR file_idx "${module_idx} + 1")
+    list(GET TREE_MODULES_AND_FILES ${module_idx} MODULE_NAME)
+    list(GET TREE_MODULES_AND_FILES ${file_idx} FILE_PREFIX)
 
-add_executable(AVLTree
-        AVLTrees/examples/avl_tree_example.cpp
-        AVLTrees/source/avl_tree.h
-        AVLTrees/source/avl_tree.tpp
-        Nodes/defaultNodes/node.h
-        Nodes/defaultNodes/node.tpp
-)
+    add_tree_executable(${MODULE_NAME} ${FILE_PREFIX})
+endforeach()
 
-add_executable(BTree
-        BTrees/examples/b_tree_example.cpp
-        BTrees/source/b_tree.h
-        BTrees/source/b_tree.tpp
-        Nodes/BTreeNodes/b_tree_node.h
-        Nodes/BTreeNodes/b_tree_node.tpp
-)
-
-add_executable(BPTree
-        BPTrees/examples/b_plus_tree_example.cpp
-        BPTrees/source/b_plus_tree.h
-        BPTrees/source/b_plus_tree.tpp
-        Nodes/BPTreeNodes/b_plus_tree_node.h
-        Nodes/BPTreeNodes/b_plus_tree_node.tpp
-)
-
-add_executable(CompleteBinaryTree
-        CompleteBinaryTrees/examples/complete_binary_tree_example.cpp
-        CompleteBinaryTrees/source/complete_binary_tree.h
-        CompleteBinaryTrees/source/complete_binary_tree.tpp
-)
-
-add_executable(FullBinaryTree
-        FullBinaryTrees/examples/full_binary_tree_example.cpp
-        FullBinaryTrees/source/full_binary_tree.h
-        FullBinaryTrees/source/full_binary_tree.tpp
-)
-
-add_executable(PerfectBinaryTree
-        PerfectBinaryTrees/examples/perfect_binary_tree_example.cpp
-        PerfectBinaryTrees/source/perfect_binary_tree.h
-        PerfectBinaryTrees/source/perfect_binary_tree.tpp
-)
-
-add_executable(FenwickTree
-        FenwickTrees/examples/fenwick_tree_example.cpp
-        FenwickTrees/source/fenwick_tree.h
-        FenwickTrees/source/fenwick_tree.tpp
-)
-
-add_executable(SegmentTree
-        SegmentTrees/examples/segment_tree_example.cpp
-        SegmentTrees/source/segment_tree.h
-        SegmentTrees/source/segment_tree.tpp
-)
-
-add_executable(SplayTree
-        SplayTrees/examples/splay_tree_example.cpp
-        SplayTrees/source/splay_tree.h
-        SplayTrees/source/splay_tree.tpp
-)
-
-add_executable(TreapTree
-        Treaps/examples/treap_example.cpp
-        Treaps/source/treap.h
-        Treaps/source/treap.tpp
-        Nodes/TreapNode/treap_node.h
-        Nodes/TreapNode/treap_node.tpp
-)
+# Add include directories for Nodes (globbed dynamically)
+file(GLOB NODE_DIRECTORIES ${CMAKE_SOURCE_DIR}/Nodes/*)
+include_directories(${NODE_DIRECTORIES})
