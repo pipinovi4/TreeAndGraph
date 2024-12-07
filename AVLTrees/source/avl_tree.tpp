@@ -1,7 +1,7 @@
 #ifndef AVL_TREE_TPP
 #define AVL_TREE_TPP
 
-#include "avl_tree.h"
+#include "../include/avl_tree.h"
 #include <iostream>
 #include <stack>
 #include <cmath>

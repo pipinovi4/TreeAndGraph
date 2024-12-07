@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "../source/segment_tree.h"
+#include "../include/segment_tree.h"
 
 int main() {
     // Sample data

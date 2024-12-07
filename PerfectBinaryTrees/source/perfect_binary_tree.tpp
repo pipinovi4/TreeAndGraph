@@ -1,7 +1,7 @@
 #ifndef PERFECT_BINARY_TREE_TPP
 #define PERFECT_BINARY_TREE_TPP
 
-#include "perfect_binary_tree.h" // Include the header file for PerfectBinaryTree
+#include "../include/perfect_binary_tree.h" // Include the header file for PerfectBinaryTree
 #include <stack> // Include stack for iterative traversal
 #include <queue> // Include queue for level-order construction
 #include <iostream> // Include iostream for displaying data in terminal

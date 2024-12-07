@@ -1,4 +1,4 @@
-#include "../source/complete_binary_tree.h" // Include the CompleteBinaryTree class
+#include "../include/complete_binary_tree.h" // Include the CompleteBinaryTree class
 #include <iostream> // Include iostream for printing
 
 int main() {

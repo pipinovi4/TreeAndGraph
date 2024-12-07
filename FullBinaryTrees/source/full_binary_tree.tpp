@@ -1,7 +1,7 @@
 #ifndef FULL_BINARY_TREE_TPP
 #define FULL_BINARY_TREE_TPP
 
-#include "full_binary_tree.h"
+#include "../include/full_binary_tree.h"
 #include <iostream>
 #include <stack>
 #include <stdexcept>

@@ -95,6 +95,6 @@ private:
     static inline void _mergeNodes(BPTreeNode* parent, int index);
 };
 
-#include "b_plus_tree.tpp"
+#include "../source/b_plus_tree.tpp"
 
 #endif // B_PLUS_TREE_H

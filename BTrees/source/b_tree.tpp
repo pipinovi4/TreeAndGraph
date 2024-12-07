@@ -1,7 +1,7 @@
 #ifndef B_TREE_TPP
 #define B_TREE_TPP
 
-#include "b_tree.h"
+#include "../include/b_tree.h"
 #include <stack>
 #include <iostream>
 

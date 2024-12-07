@@ -1,4 +1,4 @@
-#include "../source/full_binary_tree.h"
+#include "../include/full_binary_tree.h"
 #include <iostream>
 
 int main() {

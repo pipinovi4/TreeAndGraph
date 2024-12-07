@@ -1,4 +1,4 @@
-#include "../source/avl_tree.h"
+#include "../include/avl_tree.h"
 #include <iostream>
 
 int main() {

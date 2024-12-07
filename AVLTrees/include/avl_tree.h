@@ -93,6 +93,6 @@ private:
     static inline Node* _leftRotation(Node* x);
 };
 
-#include "avl_tree.tpp"
+#include "../source/avl_tree.tpp"
 
 #endif // AVL_TREE_H

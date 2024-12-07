@@ -1,4 +1,4 @@
-#include "../source/b_tree.h"
+#include "../include/b_tree.h"
 #include <iostream>
 
 int main() {

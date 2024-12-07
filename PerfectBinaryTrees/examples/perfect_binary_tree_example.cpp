@@ -1,4 +1,4 @@
-#include "../source/perfect_binary_tree.h"
+#include "../include/perfect_binary_tree.h"
 #include <iostream>
 #include <vector>
 

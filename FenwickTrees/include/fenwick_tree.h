@@ -61,6 +61,6 @@ public:
     static inline FenwickTree build(const std::vector<int>& data);
 };
 
-#include "fenwick_tree.tpp"
+#include "../source/fenwick_tree.tpp"
 
 #endif //FENWICK_TREE_H

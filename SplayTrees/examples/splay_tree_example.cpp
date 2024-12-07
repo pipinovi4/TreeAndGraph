@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../source/splay_tree.h"
+#include "../include/splay_tree.h"
 
 int main() {
     // Create a SplayTree instance

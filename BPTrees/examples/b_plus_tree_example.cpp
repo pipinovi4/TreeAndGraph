@@ -1,4 +1,4 @@
-#include "../source/b_plus_tree.h" // Include the BPTree header
+#include "../include/b_plus_tree.h" // Include the BPTree header
 #include <iostream>
 
 int main() {

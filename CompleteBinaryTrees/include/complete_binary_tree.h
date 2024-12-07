@@ -49,6 +49,6 @@ public:
     inline void printTree() const;
 };
 
-#include "complete_binary_tree.tpp"  // Include the implementation of inline methods
+#include "../source/complete_binary_tree.tpp"  // Include the implementation of inline methods
 
 #endif // COMPLETE_BINARY_TREE_H

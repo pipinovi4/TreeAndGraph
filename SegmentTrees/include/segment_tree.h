@@ -81,6 +81,6 @@ private:
     void _build(std::vector<T> data);
 };
 
-#include "segment_tree.tpp"
+#include "../source/segment_tree.tpp"
 
 #endif // SEGMENT_TREE_H

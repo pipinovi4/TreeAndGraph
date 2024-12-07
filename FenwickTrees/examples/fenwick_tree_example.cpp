@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../source/fenwick_tree.h"
+#include "../include/fenwick_tree.h"
 
 int main() {
     // Example data to initialize the Fenwick Tree

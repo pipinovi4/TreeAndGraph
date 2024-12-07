@@ -73,6 +73,6 @@ private:
     int _t;            ///< Minimum degree of the B-Tree, affecting the number of keys per node.
 };
 
-#include "b_tree.tpp"
+#include "../source/b_tree.tpp"
 
 #endif //B_TREE_H

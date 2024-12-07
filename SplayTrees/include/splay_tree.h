@@ -111,6 +111,6 @@ private:
     Node* _rightRotation(Node* node);
 };
 
-#include "splay_tree.tpp"
+#include "../source/splay_tree.tpp"
 
 #endif // SPLAY_TREE_H

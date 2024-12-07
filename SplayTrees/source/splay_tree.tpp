@@ -1,7 +1,7 @@
 #ifndef SPLAY_TREE_TPP
 #define SPLAY_TREE_TPP
 
-#include "splay_tree.h"
+#include "../include/splay_tree.h"
 #include <stack>
 
 // Constructor: Initializes the root to nullptr

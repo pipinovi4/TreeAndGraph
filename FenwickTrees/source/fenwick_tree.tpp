@@ -1,7 +1,7 @@
 #ifndef FENWICK_TREE_TPP
 #define FENWICK_TREE_TPP
 
-#include "fenwick_tree.h"
+#include "../include/fenwick_tree.h"
 
 // Constructor to initialize the Fenwick Tree with the given size.
 FenwickTree::FenwickTree(const size_t size) {

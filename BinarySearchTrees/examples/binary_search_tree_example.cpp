@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../source/binary_search_tree.h"
+#include "../include/binary_search_tree.h"
 
 int main() {
     BinarySearchTree bst;

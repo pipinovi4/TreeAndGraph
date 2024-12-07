@@ -74,6 +74,6 @@ public:
     inline void print_tree() const;
 };
 
-#include "binary_search_tree.tpp"
+#include "../source/binary_search_tree.tpp"
 
 #endif // BINARY_SEARCH_TREE_H

@@ -49,6 +49,6 @@ public:
     static inline void printTree(const Node* node);
 };
 
-#include "full_binary_tree.tpp"
+#include "../source/full_binary_tree.tpp"
 
 #endif // FULL_BINARY_TREE_H

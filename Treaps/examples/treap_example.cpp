@@ -1,4 +1,4 @@
-#include "../source/treap.h"
+#include "../include/treap.h"
 
 int main() {
 

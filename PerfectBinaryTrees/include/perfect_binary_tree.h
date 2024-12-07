@@ -56,6 +56,6 @@ public:
     static inline void printTree(const Node* node);
 };
 
-#include "perfect_binary_tree.tpp"  // Include the implementation file
+#include "../source/perfect_binary_tree.tpp"  // Include the implementation file
 
 #endif //PERFECT_BINARY_TREE_H
