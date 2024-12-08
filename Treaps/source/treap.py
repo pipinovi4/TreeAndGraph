@@ -209,18 +209,25 @@ class Treap:
 
         return result
 
-    def print_tree(self, node=None, level=0, prefix="Root: "):
+    def print_tree(self):
         """
-        Print the Treap structure for debugging purposes.
+        Print the Treap structure with indentation for visual clarity.
+        """
+        if self.root is None:
+            print("Tree is empty.")
+            return
 
-        :param node: The current node to print (default is the root).
-        :param level: The current level in the tree.
-        :param prefix: Prefix string to indicate the role of the node (e.g., "Root", "L---", "R---").
-        """
-        if node is None:
-            node = self.root
-        if node.right:
-            self.print_tree(node.right, level + 1, "R--- ")
-        print("    " * level + f"{prefix}({node.key}, {node.priority})")
-        if node.left:
-            self.print_tree(node.left, level + 1, "L--- ")
+        # Stack stores tuples: (node, level, prefix)
+        stack = [(self.root, 0, "Root: ")]
+
+        while stack:
+            current, level, prefix = stack.pop()
+
+            # Print the current node with indentation
+            print("    " * level + f"{prefix}({current.key}, {current.priority})")
+
+            # Push right child first so left child is processed first
+            if current.right:
+                stack.append((current.right, level + 1, "R--- "))
+            if current.left:
+                stack.append((current.left, level + 1, "L--- "))
