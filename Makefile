@@ -12,7 +12,7 @@ all: build $(CPP_TREES:%=$(BUILD_DIR)/%)
 .PHONY: build clean
 
 # Build Rules for C++ Executables
-$(BUILD_DIR)/%: %/source/%.cpp Nodes/defaultNodes/node.tpp
+$(BUILD_DIR)/%: %/source/%.cpp Trees/Nodes
 	@mkdir -p $(BUILD_DIR)
 	g++ -o $@ $^
 
@@ -22,92 +22,92 @@ run-cpp-%: $(BUILD_DIR)/%
 	@$<
 
 # Python Script for Each Tree (Individual Rules)
-run-py-AVLTrees: AVLTrees/examples/avl_tree_example.py
+run-py-AVLTrees: Trees/AVLTrees
 	@echo "Running Python example for AVL Tree..."
 	@python $<
 
-run-py-BTrees: BTrees/examples/b_tree_example.py
+run-py-BTrees: Trees/BTrees
 	@echo "Running Python example for BTree..."
 	@python $<
 
-run-py-BPTrees: BPTrees/examples/b_plus_tree_example.py
+run-py-BPTrees: Trees/BPTrees
 	@echo "Running Python example for BPlusTree..."
 	@python $<
 
-run-py-BinarySearchTrees: BinarySearchTrees/examples/binary_search_tree_example.py
+run-py-BinarySearchTrees: Trees/BinarySearchTrees
 	@echo "Running Python example for BinarySearchTree..."
 	@python $<
 
-run-py-CompleteBinaryTrees: CompleteBinaryTrees/examples/complete_binary_tree_example.py
+run-py-CompleteBinaryTrees: Trees/CompleteBinaryTrees
 	@echo "Running Python example for CompleteBinaryTree..."
 	@python $<
 
-run-py-FenwickTrees: FenwickTrees/examples/fenwick_tree_example.py
+run-py-FenwickTrees: Trees/FenwickTrees
 	@echo "Running Python example for FenwickTree..."
 	@python $<
 
-run-py-FullBinaryTrees: FullBinaryTrees/examples/full_binary_tree_example.py
+run-py-FullBinaryTrees: Trees/FullBinaryTrees
 	@echo "Running Python example for FullBinaryTree..."
 	@python $<
 
-run-py-PerfectBinaryTrees: PerfectBinaryTrees/examples/perfect_binary_tree_example.py
+run-py-PerfectBinaryTrees: Trees/PerfectBinaryTrees
 	@echo "Running Python example for PerfectBinaryTree..."
 	@python $<
 
-run-py-SegmentTrees: SegmentTrees/examples/segment_tree_example.py
+run-py-SegmentTrees: Trees/SegmentTrees
 	@echo "Running Python example for SegmentTree..."
 	@python $<
 
-run-py-SplayTrees: SplayTrees/examples/splay_tree_example.py
+run-py-SplayTrees: Trees/SplayTrees
 	@echo "Running Python example for SplayTree..."
 	@python $<
 
-run-py-Treaps: Treaps/examples/treap_example.py
+run-py-Treaps: Trees/Treaps
 	@echo "Running Python example for Treap..."
 	@python $<
 
 # JavaScript Script for Each Tree (Individual Rules)
-run-js-AVLTrees: AVLTrees/examples/avl_tree_example.js
+run-js-AVLTrees: Trees/AVLTrees
 	@echo "Running JavaScript example for AVL Tree..."
 	@node $<
 
-run-js-BTrees: BTrees/examples/b_tree_example.js
+run-js-BTrees: Trees/BTrees
 	@echo "Running JavaScript example for BTree..."
 	@node $<
 
-run-js-BPTrees: BPTrees/examples/b_plus_tree_example.js
+run-js-BPTrees: Trees/BPTrees
 	@echo "Running JavaScript example for BPlusTree..."
 	@node $<
 
-run-js-BinarySearchTrees: BinarySearchTrees/examples/binary_search_tree_example.js
+run-js-BinarySearchTrees: Trees/BinarySearchTrees
 	@echo "Running JavaScript example for BinarySearchTree..."
 	@node $<
 
-run-js-CompleteBinaryTrees: CompleteBinaryTrees/examples/complete_binary_tree_example.js
+run-js-CompleteBinaryTrees: Trees/CompleteBinaryTrees
 	@echo "Running JavaScript example for CompleteBinaryTree..."
 	@node $<
 
-run-js-FenwickTrees: FenwickTrees/examples/fenwick_tree_example.js
+run-js-FenwickTrees: Trees/FenwickTrees
 	@echo "Running JavaScript example for FenwickTree..."
 	@node $<
 
-run-js-FullBinaryTrees: FullBinaryTrees/examples/full_binary_tree_example.js
+run-js-FullBinaryTrees: Trees/FullBinaryTrees
 	@echo "Running JavaScript example for FullBinaryTree..."
 	@node $<
 
-run-js-PerfectBinaryTrees: PerfectBinaryTrees/examples/perfect_binary_tree_example.js
+run-js-PerfectBinaryTrees: Trees/PerfectBinaryTrees
 	@echo "Running JavaScript example for PerfectBinaryTree..."
 	@node $<
 
-run-js-SegmentTrees: SegmentTrees/examples/segment_tree_example.js
+run-js-SegmentTrees: Trees/SegmentTrees
 	@echo "Running JavaScript example for SegmentTree..."
 	@node $<
 
-run-js-SplayTrees: SplayTrees/examples/splay_tree_example.js
+run-js-SplayTrees: Trees/SplayTrees
 	@echo "Running JavaScript example for SplayTree..."
 	@node $<
 
-run-js-Treaps: Treaps/examples/treap_example.js
+run-js-Treaps: Trees/Treaps
 	@echo "Running JavaScript example for Treap..."
 	@node $<
 

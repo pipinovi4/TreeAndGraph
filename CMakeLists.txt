@@ -14,17 +14,17 @@ include_directories(${COMMON_INCLUDE_DIR})
 
 # List of tree modules and their corresponding file prefixes
 set(TREE_MODULES_AND_FILES
-        BinarySearchTrees binary_search_tree
-        AVLTrees avl_tree
-        BTrees b_tree
-        BPTrees b_plus_tree
-        CompleteBinaryTrees complete_binary_tree
-        FullBinaryTrees full_binary_tree
-        PerfectBinaryTrees perfect_binary_tree
-        FenwickTrees fenwick_tree
-        SegmentTrees segment_tree
-        SplayTrees splay_tree
-        Treaps treap
+        Trees/BinarySearchTrees binary_search_tree
+        Trees/AVLTrees avl_tree
+        Trees/BTrees b_tree
+        Trees/BPTrees b_plus_tree
+        Trees/CompleteBinaryTrees complete_binary_tree
+        Trees/FullBinaryTrees full_binary_tree
+        Trees/PerfectBinaryTrees perfect_binary_tree
+        Trees/FenwickTrees fenwick_tree
+        Trees/SegmentTrees segment_tree
+        Trees/SplayTrees splay_tree
+        Trees/Treaps treap
 )
 
 # Helper function to collect sources and headers for a tree module
