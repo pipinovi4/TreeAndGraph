@@ -212,20 +212,30 @@ class Treap {
     }
 
     /**
-     * Print the structure of the Treap for debugging purposes.
-     *
-     * @param {TreapNode|null} node - The current node to print (default is the root).
-     * @param {number} level - The current level in the tree.
-     * @param {string} prefix - Prefix string to indicate the node's position.
+     * Print the structure of the Treap for debugging purposes
      */
-    printTree(node = this.root, level = 0, prefix = "Root: ") {
-        if (node === null) return;
-        if (node.right !== null) {
-            this.printTree(node.right, level + 1, "R--- ");
+    printTree() {
+        if (this.root === null) {
+            console.log("Tree is empty.");
+            return;
         }
-        console.log("    ".repeat(level) + `${prefix}(${node.key}, ${node.priority})`);
-        if (node.left !== null) {
-            this.printTree(node.left, level + 1, "L--- ");
+
+        // Initialize the stack with the root node, level 0, and the "Root: " prefix
+        const stack = [[this.root, 0, "Root: "]];
+
+        while (stack.length > 0) {
+            const [node, level, prefix] = stack.pop();
+
+            // Print the current node with indentation
+            console.log("    ".repeat(level) + `${prefix}(${node.key}, ${node.priority})`);
+
+            // Push the right child first so the left child is processed first
+            if (node.right !== null) {
+                stack.push([node.right, level + 1, "R--- "]);
+            }
+            if (node.left !== null) {
+                stack.push([node.left, level + 1, "L--- "]);
+            }
         }
     }
 }
