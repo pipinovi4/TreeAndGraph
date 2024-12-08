@@ -29,15 +29,19 @@ set(TREE_MODULES_AND_FILES
 
 # Helper function to collect sources and headers for a tree module
 macro(add_tree_executable MODULE_NAME FILE_PREFIX)
+    # Add debug message
+    message(STATUS "Adding executable for module: ${MODULE_NAME}, file prefix: ${FILE_PREFIX}")
+
     # Add executable for the tree module
-    add_executable(${MODULE_NAME}_example
+    add_executable(${MODULE_NAME}
             ${MODULE_NAME}/examples/${FILE_PREFIX}_example.cpp
             ${MODULE_NAME}/include/${FILE_PREFIX}.h
             ${MODULE_NAME}/source/${FILE_PREFIX}.tpp
     )
+
     # Include source and common include directories
-    target_include_directories(${MODULE_NAME}_example PRIVATE
-            ${CMAKE_SOURCE_DIR}/${MODULE_NAME}/source
+    target_include_directories(${MODULE_NAME} PRIVATE
+            ${CMAKE_SOURCE_DIR}/${MODULE_NAME}/include
             ${COMMON_INCLUDE_DIR}
     )
 endmacro()
@@ -55,6 +59,10 @@ foreach(idx RANGE 0 ${num_modules})
     add_tree_executable(${MODULE_NAME} ${FILE_PREFIX})
 endforeach()
 
-# Add include directories for Nodes (globbed dynamically)
-file(GLOB NODE_DIRECTORIES ${CMAKE_SOURCE_DIR}/Nodes/*)
-include_directories(${NODE_DIRECTORIES})
+# Add include directories for Nodes
+include_directories(
+        ${CMAKE_SOURCE_DIR}/Nodes/defaultNodes
+        ${CMAKE_SOURCE_DIR}/Nodes/BTreeNodes
+        ${CMAKE_SOURCE_DIR}/Nodes/BPTreeNodes
+        ${CMAKE_SOURCE_DIR}/Nodes/TreapNode
+)
