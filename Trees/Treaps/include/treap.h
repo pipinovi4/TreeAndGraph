@@ -2,7 +2,7 @@
 #define TREAP_H
 
 #pragma once
-#include "../../../Nodes/TreapNode/treap_node.h"
+#include "../../Nodes/TreapNode/treap_node.h"
 #include <vector>
 #include <string>
 
