@@ -2,7 +2,7 @@
 #define BINARY_SEARCH_TREE_H
 
 #pragma once
-#include "../../../Nodes/defaultNodes/node.h"
+#include "../../Nodes/defaultNodes/node.h"
 
 /**
  * @class BinarySearchTree

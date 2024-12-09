@@ -2,7 +2,7 @@
 #define BINARY_SEARCH_TREE_TPP
 
 #include "../include/binary_search_tree.h"
-#include "../../../Nodes/defaultNodes/node.h"
+#include "../../Nodes/defaultNodes/node.h"
 #include <stack>
 #include <vector>
 
