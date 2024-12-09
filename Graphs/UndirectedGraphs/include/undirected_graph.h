@@ -3,24 +3,45 @@
 
 #pragma once
 #include <vector>
+#include <map>
+#include <algorithm>
+#include <iostream>
 
+// Vertex class
+template <typename T>
+class Vertex {
+public:
+    Vertex(T value);
+
+    void addNeighbor(Vertex<T>* neighbor);
+
+    // Getters
+    const T& getValue() const;
+    const std::vector<Vertex<T>*>& getNeighbors() const;
+
+private:
+    T _value;
+    std::vector<Vertex<T>*> _neighbors;
+};
+
+// UndirectedGraph class
 template <typename T>
 class UndirectedGraph {
 public:
     UndirectedGraph();
 
-    void addVertex(std::vector<T> vertex);
+    void addVertex(Vertex<T>* vertex);
 
-    void addEdge(std::vector<T> vertex1, std::vector<T> vertex2);
+    void addEdge(Vertex<T>* vertex1, Vertex<T>* vertex2);
 
-    bool hasEdge(std::vector<T> source, std::vector<T> target);
+    bool hasEdge(Vertex<T>* source, Vertex<T>* target) const;
 
-    void print();
+    void print() const;
 
 private:
-    std::vector<T> _adjacency_list;
+    std::map<Vertex<T>*, std::vector<Vertex<T>*>> _adjacency_list;
 };
 
 #include "../source/undirected_graph.tpp"
 
-#endif //UNDIRECTED_GRAPH_H
+#endif // UNDIRECTED_GRAPH_H
