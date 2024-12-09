@@ -58,7 +58,7 @@ class UndirectedGraph {
      */
     hasEdge(source, target) {
         // Check if the source vertex exists and if the target is in its neighbors list.
-        return this.adjacencyList[source]?.includes(target) || false;
+        return this.adjacencyList[source].includes(target) || false;
     }
 
     /**
@@ -72,3 +72,5 @@ class UndirectedGraph {
         }
     }
 }
+
+module.exports = UndirectedGraph;
