@@ -27,36 +27,85 @@ set(TREE_MODULES_AND_FILES
         Trees/Treaps treap
 )
 
+# List of graph modules and their corresponding file prefixes
+set(GRAPH_MODULES_AND_FILES
+        Graphs/UndirectedGraphs undirected_graph
+#        Graphs/DirectedGraphs directed_graph
+#        Graphs/AdjacencyListGraphs adjacency_list_graph
+#        Graphs/AdjacencyMatrixGraphs adjacency_matrix_graph
+#        Graphs/BFSGraphs bfs_graph
+#        Graphs/DFSGraphs dfs_graph
+#        Graphs/BipartiteGraphs bipartite_graph
+#        Graphs/DirectedAcyclicGraphs directed_acyclic_graph
+#        Graphs/Hypergraphs hypergraph
+#        Graphs/PlanarGraphs planar_graph
+#        Graphs/Multigraphs multigraph
+#        Graphs/TreeGraphs tree_graph
+#        Graphs/WeightedGraphs weighted_graph
+)
+
 # Helper function to collect sources and headers for a tree module
 macro(add_tree_executable MODULE_NAME FILE_PREFIX)
     # Add debug message
-    message(STATUS "Adding executable for module: ${MODULE_NAME}, file prefix: ${FILE_PREFIX}")
+    message(STATUS "Adding executable for tree module: ${MODULE_NAME}, file prefix: ${FILE_PREFIX}")
 
     # Add executable for the tree module
-    add_executable(${MODULE_NAME}
+    add_executable(${FILE_PREFIX}_example
             ${MODULE_NAME}/examples/${FILE_PREFIX}_example.cpp
             ${MODULE_NAME}/include/${FILE_PREFIX}.h
             ${MODULE_NAME}/source/${FILE_PREFIX}.tpp
     )
 
     # Include source and common include directories
-    target_include_directories(${MODULE_NAME} PRIVATE
+    target_include_directories(${FILE_PREFIX}_example PRIVATE
+            ${CMAKE_SOURCE_DIR}/${MODULE_NAME}/include
+            ${COMMON_INCLUDE_DIR}
+    )
+endmacro()
+
+# Helper function to collect sources and headers for a graph module
+macro(add_graph_executable MODULE_NAME FILE_PREFIX)
+    # Add debug message
+    message(STATUS "Adding executable for graph module: ${MODULE_NAME}, file prefix: ${FILE_PREFIX}")
+
+    # Add executable for the graph module
+    add_executable(${FILE_PREFIX}_example
+            ${MODULE_NAME}/examples/${FILE_PREFIX}_example.cpp
+            ${MODULE_NAME}/include/${FILE_PREFIX}.h
+            ${MODULE_NAME}/source/${FILE_PREFIX}.tpp
+    )
+
+    # Include source and common include directories
+    target_include_directories(${FILE_PREFIX}_example PRIVATE
             ${CMAKE_SOURCE_DIR}/${MODULE_NAME}/include
             ${COMMON_INCLUDE_DIR}
     )
 endmacro()
 
 # Loop over all tree modules and add their executables
-list(LENGTH TREE_MODULES_AND_FILES num_items)
-math(EXPR num_modules "${num_items} / 2 - 1")
+list(LENGTH TREE_MODULES_AND_FILES num_trees)
+math(EXPR num_tree_modules "${num_trees} / 2 - 1")
 
-foreach(idx RANGE 0 ${num_modules})
+foreach(idx RANGE 0 ${num_tree_modules})
     math(EXPR module_idx "${idx} * 2")
     math(EXPR file_idx "${module_idx} + 1")
     list(GET TREE_MODULES_AND_FILES ${module_idx} MODULE_NAME)
     list(GET TREE_MODULES_AND_FILES ${file_idx} FILE_PREFIX)
 
     add_tree_executable(${MODULE_NAME} ${FILE_PREFIX})
+endforeach()
+
+# Loop over all graph modules and add their executables
+list(LENGTH GRAPH_MODULES_AND_FILES num_graphs)
+math(EXPR num_graph_modules "${num_graphs} / 2 - 1")
+
+foreach(idx RANGE 0 ${num_graph_modules})
+    math(EXPR module_idx "${idx} * 2")
+    math(EXPR file_idx "${module_idx} + 1")
+    list(GET GRAPH_MODULES_AND_FILES ${module_idx} MODULE_NAME)
+    list(GET GRAPH_MODULES_AND_FILES ${file_idx} FILE_PREFIX)
+
+    add_graph_executable(${MODULE_NAME} ${FILE_PREFIX})
 endforeach()
 
 # Add include directories for Nodes
