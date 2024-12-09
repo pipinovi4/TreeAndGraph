@@ -21,6 +21,8 @@ run-cpp-%: $(BUILD_DIR)/%
 	@echo "Running C++ example for $<..."
 	@$<
 
+# Python and JavaScript targets for all Tree Types
+
 # Python Script for Each Tree (Individual Rules)
 run-py-AVLTrees: Trees/AVLTrees/examples/avl_tree_example.py
 	@echo "Running Python example for AVL Tree..."
@@ -111,12 +113,123 @@ run-js-Treaps: Trees/Treaps/examples/treap_example.js
 	@echo "Running JavaScript example for Treap..."
 	@node $<
 
+# Python and JavaScript targets for all Graph Types
+
+# Adjacency List Graph
+run-py-adjacency_list_graph: Graphs/AdjacencyListGraphs/examples/adjacency_list_graph_example.py
+	@echo "Running Python example for AdjacencyListGraph..."
+	@python $<
+
+run-js-adjacency_list_graph: Graphs/AdjacencyListGraphs/examples/adjacency_list_graph_example.js
+	@echo "Running JavaScript example for AdjacencyListGraph..."
+	@node $<
+
+# Adjacency Matrix Graph
+run-py-adjacency_matrix_graph: Graphs/AdjacencyMatrixGraphs/examples/adjacency_matrix_graph_example.py
+	@echo "Running Python example for AdjacencyMatrixGraph..."
+	@python $<
+
+run-js-adjacency_matrix_graph: Graphs/AdjacencyMatrixGraphs/examples/adjacency_matrix_graph_example.js
+	@echo "Running JavaScript example for AdjacencyMatrixGraph..."
+	@node $<
+
+# BFS Graph
+run-py-bfs_graph: Graphs/BFSGraphs/examples/bfs_graph_example.py
+	@echo "Running Python example for BFSGraph..."
+	@python $<
+
+run-js-bfs_graph: Graphs/BFSGraphs/examples/bfs_graph_example.js
+	@echo "Running JavaScript example for BFSGraph..."
+	@node $<
+
+# Bipartite Graph
+run-py-bipartite_graph: Graphs/BipartiteGraphs/examples/bipartite_graph_example.py
+	@echo "Running Python example for BipartiteGraph..."
+	@python $<
+
+run-js-bipartite_graph: Graphs/BipartiteGraphs/examples/bipartite_graph_example.js
+	@echo "Running JavaScript example for BipartiteGraph..."
+	@node $<
+
+# DFS Graph
+run-py-dfs_graph: Graphs/DFSGraphs/examples/dfs_graph_example.py
+	@echo "Running Python example for DFSGraph..."
+	@python $<
+
+run-js-dfs_graph: Graphs/DFSGraphs/examples/dfs_graph_example.js
+	@echo "Running JavaScript example for DFSGraph..."
+	@node $<
+
+# Directed Acyclic Graph
+run-py-directed_acyclic_graph: Graphs/DirectedAcyclicGraphs/examples/directed_acyclic_graph_example.py
+	@echo "Running Python example for DirectedAcyclicGraph..."
+	@python $<
+
+run-js-directed_acyclic_graph: Graphs/DirectedAcyclicGraphs/examples/directed_acyclic_graph_example.js
+	@echo "Running JavaScript example for DirectedAcyclicGraph..."
+	@node $<
+
+# Directed Graph
+run-py-directed_graph: Graphs/DirectedGraphs/examples/directed_graph_example.py
+	@echo "Running Python example for DirectedGraph..."
+	@python $<
+
+run-js-directed_graph: Graphs/DirectedGraphs/examples/directed_graph_example.js
+	@echo "Running JavaScript example for DirectedGraph..."
+	@node $<
+
+# Hypergraph
+run-py-hypergraph: Graphs/Hypergraphs/examples/hypergraph_example.py
+	@echo "Running Python example for Hypergraph..."
+	@python $<
+
+run-js-hypergraph: Graphs/Hypergraphs/examples/hypergraph_example.js
+	@echo "Running JavaScript example for Hypergraph..."
+	@node $<
+
+# Multigraph
+run-py-multigraph: Graphs/Multigraphs/examples/multigraph_example.py
+	@echo "Running Python example for Multigraph..."
+	@python $<
+
+run-js-multigraph: Graphs/Multigraphs/examples/multigraph_example.js
+	@echo "Running JavaScript example for Multigraph..."
+	@node $<
+
+# Planar Graph
+run-py-planar_graph: Graphs/PlanarGraphs/examples/planar_graph_example.py
+	@echo "Running Python example for PlanarGraph..."
+	@python $<
+
+run-js-planar_graph: Graphs/PlanarGraphs/examples/planar_graph_example.js
+	@echo "Running JavaScript example for PlanarGraph..."
+	@node $<
+
+# Tree Graph
+run-py-tree_graph: Graphs/TreeGraphs/examples/tree_graph_example.py
+	@echo "Running Python example for TreeGraph..."
+	@python $<
+
+run-js-tree_graph: Graphs/TreeGraphs/examples/tree_graph_example.js
+	@echo "Running JavaScript example for TreeGraph..."
+	@node $<
+
+# Undirected Graph
 run-py-undirected_graph: Graphs/UndirectedGraphs/examples/undirected_graph_example.py
 	@echo "Running Python example for UndirectedGraph..."
 	@python $<
 
 run-js-undirected_graph: Graphs/UndirectedGraphs/examples/undirected_graph_example.js
-	@echo "Running Javascript example for UndirectedGraph..."
+	@echo "Running JavaScript example for UndirectedGraph..."
+	@node $<
+
+# Weighted Graph
+run-py-weighted_graph: Graphs/WeightedGraph/examples/weighted_graph_example.py
+	@echo "Running Python example for WeightedGraph..."
+	@python $<
+
+run-js-weighted_graph: Graphs/WeightedGraph/examples/weighted_graph_example.js
+	@echo "Running JavaScript example for WeightedGraph..."
 	@node $<
 
 # Build the project
