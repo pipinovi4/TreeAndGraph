@@ -30,7 +30,7 @@ set(TREE_MODULES_AND_FILES
 # List of graph modules and their corresponding file prefixes
 set(GRAPH_MODULES_AND_FILES
         Graphs/UndirectedGraphs undirected_graph
-#        Graphs/DirectedGraphs directed_graph
+        Graphs/DirectedGraphs directed_graph
 #        Graphs/AdjacencyListGraphs adjacency_list_graph
 #        Graphs/AdjacencyMatrixGraphs adjacency_matrix_graph
 #        Graphs/BFSGraphs bfs_graph
@@ -50,14 +50,14 @@ macro(add_tree_executable MODULE_NAME FILE_PREFIX)
     message(STATUS "Adding executable for tree module: ${MODULE_NAME}, file prefix: ${FILE_PREFIX}")
 
     # Add executable for the tree module
-    add_executable(${FILE_PREFIX}_example
+    add_executable(${FILE_PREFIX}
             ${MODULE_NAME}/examples/${FILE_PREFIX}_example.cpp
             ${MODULE_NAME}/include/${FILE_PREFIX}.h
             ${MODULE_NAME}/source/${FILE_PREFIX}.tpp
     )
 
     # Include source and common include directories
-    target_include_directories(${FILE_PREFIX}_example PRIVATE
+    target_include_directories(${FILE_PREFIX} PRIVATE
             ${CMAKE_SOURCE_DIR}/${MODULE_NAME}/include
             ${COMMON_INCLUDE_DIR}
     )
@@ -69,14 +69,14 @@ macro(add_graph_executable MODULE_NAME FILE_PREFIX)
     message(STATUS "Adding executable for graph module: ${MODULE_NAME}, file prefix: ${FILE_PREFIX}")
 
     # Add executable for the graph module
-    add_executable(${FILE_PREFIX}_example
+    add_executable(${FILE_PREFIX}
             ${MODULE_NAME}/examples/${FILE_PREFIX}_example.cpp
             ${MODULE_NAME}/include/${FILE_PREFIX}.h
             ${MODULE_NAME}/source/${FILE_PREFIX}.tpp
     )
 
     # Include source and common include directories
-    target_include_directories(${FILE_PREFIX}_example PRIVATE
+    target_include_directories(${FILE_PREFIX} PRIVATE
             ${CMAKE_SOURCE_DIR}/${MODULE_NAME}/include
             ${COMMON_INCLUDE_DIR}
     )
