@@ -22,93 +22,101 @@ run-cpp-%: $(BUILD_DIR)/%
 	@$<
 
 # Python Script for Each Tree (Individual Rules)
-run-py-AVLTrees: Trees/AVLTrees
+run-py-AVLTrees: Trees/AVLTrees/examples/avl_tree_example.py
 	@echo "Running Python example for AVL Tree..."
 	@python $<
 
-run-py-BTrees: Trees/BTrees
+run-py-BTrees: Trees/BTrees/examples/b_tree_example.py
 	@echo "Running Python example for BTree..."
 	@python $<
 
-run-py-BPTrees: Trees/BPTrees
+run-py-BPTrees: Trees/BPTrees/examples/b_plus_tree_example.py
 	@echo "Running Python example for BPlusTree..."
 	@python $<
 
-run-py-BinarySearchTrees: Trees/BinarySearchTrees
+run-py-BinarySearchTrees: Trees/BinarySearchTrees/examples/binary_search_tree_example.py
 	@echo "Running Python example for BinarySearchTree..."
 	@python $<
 
-run-py-CompleteBinaryTrees: Trees/CompleteBinaryTrees
+run-py-CompleteBinaryTrees: Trees/CompleteBinaryTrees/examples/complete_binary_tree_example.py
 	@echo "Running Python example for CompleteBinaryTree..."
 	@python $<
 
-run-py-FenwickTrees: Trees/FenwickTrees
+run-py-FenwickTrees: Trees/FenwickTrees/examples/fenwick_tree_example.py
 	@echo "Running Python example for FenwickTree..."
 	@python $<
 
-run-py-FullBinaryTrees: Trees/FullBinaryTrees
+run-py-FullBinaryTrees: Trees/FullBinaryTrees/examples/full_binary_tree_example.py
 	@echo "Running Python example for FullBinaryTree..."
 	@python $<
 
-run-py-PerfectBinaryTrees: Trees/PerfectBinaryTrees
+run-py-PerfectBinaryTrees: Trees/PerfectBinaryTrees/examples/perfect_binary_tree_example.py
 	@echo "Running Python example for PerfectBinaryTree..."
 	@python $<
 
-run-py-SegmentTrees: Trees/SegmentTrees
+run-py-SegmentTrees: Trees/SegmentTrees/examples/segment_tree_example.py
 	@echo "Running Python example for SegmentTree..."
 	@python $<
 
-run-py-SplayTrees: Trees/SplayTrees
+run-py-SplayTrees: Trees/SplayTrees/examples/splay_tree_example.py
 	@echo "Running Python example for SplayTree..."
 	@python $<
 
-run-py-Treaps: Trees/Treaps
+run-py-Treaps: Trees/Treaps/examples/treap_example.py
 	@echo "Running Python example for Treap..."
 	@python $<
 
 # JavaScript Script for Each Tree (Individual Rules)
-run-js-AVLTrees: Trees/AVLTrees
+run-js-AVLTrees: Trees/AVLTrees/examples/avl_tree_example.js
 	@echo "Running JavaScript example for AVL Tree..."
 	@node $<
 
-run-js-BTrees: Trees/BTrees
+run-js-BTrees: Trees/BTrees/examples/b_tree_example.js
 	@echo "Running JavaScript example for BTree..."
 	@node $<
 
-run-js-BPTrees: Trees/BPTrees
+run-js-BPTrees: Trees/BPTrees/examples/b_plus_tree_example.js
 	@echo "Running JavaScript example for BPlusTree..."
 	@node $<
 
-run-js-BinarySearchTrees: Trees/BinarySearchTrees
+run-js-BinarySearchTrees: Trees/BinarySearchTrees/examples/binary_search_tree_example.js
 	@echo "Running JavaScript example for BinarySearchTree..."
 	@node $<
 
-run-js-CompleteBinaryTrees: Trees/CompleteBinaryTrees
+run-js-CompleteBinaryTrees: Trees/CompleteBinaryTrees/examples/complete_binary_tree_example.js
 	@echo "Running JavaScript example for CompleteBinaryTree..."
 	@node $<
 
-run-js-FenwickTrees: Trees/FenwickTrees
+run-js-FenwickTrees: Trees/FenwickTrees/examples/fenwick_tree_example.js
 	@echo "Running JavaScript example for FenwickTree..."
 	@node $<
 
-run-js-FullBinaryTrees: Trees/FullBinaryTrees
+run-js-FullBinaryTrees: Trees/FullBinaryTrees/examples/full_binary_tree_example.js
 	@echo "Running JavaScript example for FullBinaryTree..."
 	@node $<
 
-run-js-PerfectBinaryTrees: Trees/PerfectBinaryTrees
+run-js-PerfectBinaryTrees: Trees/PerfectBinaryTrees/examples/perfect_binary_tree_example.js
 	@echo "Running JavaScript example for PerfectBinaryTree..."
 	@node $<
 
-run-js-SegmentTrees: Trees/SegmentTrees
+run-js-SegmentTrees: Trees/SegmentTrees/examples/segment_tree_example.js
 	@echo "Running JavaScript example for SegmentTree..."
 	@node $<
 
-run-js-SplayTrees: Trees/SplayTrees
+run-js-SplayTrees: Trees/SplayTrees/examples/splay_tree_example.js
 	@echo "Running JavaScript example for SplayTree..."
 	@node $<
 
-run-js-Treaps: Trees/Treaps
+run-js-Treaps: Trees/Treaps/examples/treap_example.js
 	@echo "Running JavaScript example for Treap..."
+	@node $<
+
+run-py-undirected_graph: Graphs/UndirectedGraphs/examples/undirected_graph_example.py
+	@echo "Running Python example for UndirectedGraph..."
+	@python $<
+
+run-js-undirected_graph: Graphs/UndirectedGraphs/examples/undirected_graph_example.js
+	@echo "Running Javascript example for UndirectedGraph..."
 	@node $<
 
 # Build the project
