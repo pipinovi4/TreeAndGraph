@@ -32,9 +32,9 @@ set(GRAPH_MODULES_AND_FILES
         Graphs/UndirectedGraphs undirected_graph
         Graphs/DirectedGraphs directed_graph
         Graphs/DFSGraphs dfs_graph
+        Graphs/BFSGraphs bfs_graph
 #        Graphs/AdjacencyListGraphs adjacency_list_graph
 #        Graphs/AdjacencyMatrixGraphs adjacency_matrix_graph
-#        Graphs/BFSGraphs bfs_graph
 #        Graphs/BipartiteGraphs bipartite_graph
 #        Graphs/DirectedAcyclicGraphs directed_acyclic_graph
 #        Graphs/Hypergraphs hypergraph
