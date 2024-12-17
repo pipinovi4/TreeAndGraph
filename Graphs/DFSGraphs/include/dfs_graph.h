@@ -89,7 +89,7 @@ public:
 
 private:
     std::map<Vertex<T>*, std::vector<Vertex<T>*>> _graph;  ///< Adjacency list representing the graph.
-    std::set<Vertex<T>*> vertices;  ///< Set of vertices in the graph to ensure uniqueness.
+    std::set<Vertex<T>*> _vertices;  ///< Set of vertices in the graph to ensure uniqueness.
 };
 
 #include "../source/dfs_graph.tpp"
