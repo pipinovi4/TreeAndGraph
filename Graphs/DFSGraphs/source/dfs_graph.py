@@ -1,12 +1,13 @@
 from collections import defaultdict
 
+
 class DFSGraph:
     def __init__(self):
         """
         Initialize the graph with an empty adjacency list.
 
         Attributes:
-            graph (defaultdict): A dictionary where each key is a vertex and the value is a list of adjacent vertices.
+            graph (defaultDict): A dictionary where each key is a vertex and the value is a list of adjacent vertices.
             vertices (set): A set containing all vertices in the graph.
         """
         self.graph = defaultdict(list)
