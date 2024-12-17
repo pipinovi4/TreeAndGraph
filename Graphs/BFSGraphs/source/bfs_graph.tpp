@@ -48,7 +48,7 @@ void BFSGraph<T>::add_edge(Vertex<T> *source, Vertex<T> *target) {
 }
 
 template <typename T>
-void BFSGraph<T>::bfs(Vertex<T> *start_vertex) {
+void BFSGraph<T>::bfs(Vertex<T>* start_vertex) {
     if (!start_vertex) return;
 
     std::set<Vertex<T>*> visited;
@@ -63,11 +63,11 @@ void BFSGraph<T>::bfs(Vertex<T> *start_vertex) {
             visited.insert(current_vertex);
             std::cout << current_vertex->getValue() << " ";
 
+            // Access neighbors from the graph's adjacency list
             if (_graph.find(current_vertex) != _graph.end()) {
-                const auto& neighbors = current_vertex->getNeighbors();
-                for (auto it = neighbors.rbegin(); it != neighbors.rend(); ++it) {
-                    if (visited.find(*it) == visited.end()) {
-                        queue.push(*it);
+                for (Vertex<T>* neighbor : _graph[current_vertex]) {
+                    if (visited.find(neighbor) == visited.end()) {
+                        queue.push(neighbor);
                     }
                 }
             }
