@@ -57,13 +57,12 @@ class DFSGraph {
     dfs(startVertex) {
         const visited = new Set();
         const stack = [startVertex];
-        const result = []; // Array to collect the visited vertices
 
         while (stack.length > 0) {
             const currentVertex = stack.pop();
             if (!visited.has(currentVertex)) {
                 visited.add(currentVertex);
-                result.push(currentVertex); // Collect the vertex
+                process.stdout.write(currentVertex + " ");
 
                 // Add neighbors in reverse order to maintain order of traversal
                 for (let i = (this.graph[currentVertex] || []).length - 1; i >= 0; i--) {
@@ -75,8 +74,7 @@ class DFSGraph {
             }
         }
 
-        // Print all the visited vertices in one row
-        console.log(result.join(" "));
+        process.stdout.write("\n");
     }
 
     /**
