@@ -1,3 +1,6 @@
+from collections import defaultdict
+
+
 class UndirectedGraph:
     """
     A class to represent an undirected graph using an adjacency list.
@@ -13,7 +16,7 @@ class UndirectedGraph:
         The adjacency list is a dictionary where each key is a vertex,
         and the associated value is a list of neighboring vertices.
         """
-        self.adjacency_list = {}
+        self.adjacency_list = defaultdict(list)
 
     def add_vertex(self, vertex):
         """
