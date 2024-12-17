@@ -38,8 +38,9 @@ class BFSGraph {
                 visited.add(currenVertex);
                 process.stdout.write(currenVertex + " ");
 
-                for (const neighbor of this.graph[currenVertex]) {
-                    if (!visited.has((neighbor))) {
+                // Ensure that the current vertex has an entry in the graph
+                for (const neighbor of this.graph[currenVertex] || []) {
+                    if (!visited.has(neighbor)) {
                         queue.push(neighbor);
                     }
                 }
