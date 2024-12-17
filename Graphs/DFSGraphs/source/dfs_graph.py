@@ -52,16 +52,18 @@ class DFSGraph:
             str: The vertices visited during the DFS traversal in the order they are visited.
         """
         visited = set()
+        stack = list(start_vertex)
 
-        def dfs_recursive(vertex):
-            if vertex not in visited:
-                visited.add(vertex)
-                print(vertex, end=" ")
-                for neighbor in self.graph[vertex]:
-                    dfs_recursive(neighbor)
+        while len(stack) != 0:
+            current_vertex = stack.pop()
+            if current_vertex not in visited:
+                visited.add(current_vertex)
+                print(current_vertex, end=" ")
 
-        dfs_recursive(start_vertex)
-        print()
+                # Add neighbors in reverse order to maintain order of traversal
+                for neighbor in reversed(self.graph.get(current_vertex, [])):
+                    if neighbor not in visited:
+                        stack.append(neighbor)
 
     def display(self):
         """
