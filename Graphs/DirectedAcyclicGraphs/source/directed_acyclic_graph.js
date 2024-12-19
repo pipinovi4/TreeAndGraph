@@ -6,6 +6,9 @@ class DirectedAcyclicGraph {
 
     addVertex(vertex) {
         this.vertices.add(vertex);
+        if (!this.graph[vertex]) {
+            this.graph[vertex] = [];  // Initialize an empty array for the vertex
+        }
     }
 
     addEdge(source, target) {
@@ -16,6 +19,10 @@ class DirectedAcyclicGraph {
             this.addVertex(target);
         }
 
+        if (!this.graph[source]) {
+            this.graph[source] = [];
+        }
+
         this.graph[source].push(target);
         if (this._hasCycle()) {
             this.graph[source].pop();
@@ -23,7 +30,7 @@ class DirectedAcyclicGraph {
         }
     }
 
-    dfsIterative(start_vertex, visited=null, process=null, record_stack=null, detect_cycle=false) {
+    dfsIterative(start_vertex, visited = null, process = null, record_stack = null, detect_cycle = false) {
         if (!visited) {
             visited = new Set();
         }
@@ -47,7 +54,7 @@ class DirectedAcyclicGraph {
                     record_stack.unshift(vertex);
                 }
 
-                for (const neighbor of this.graph[vertex].reverse()) {
+                for (const neighbor of (this.graph[vertex] || []).reverse()) {
                     if (detect_cycle && rec_stack.has(neighbor)) {
                         return true;
                     }
@@ -71,7 +78,7 @@ class DirectedAcyclicGraph {
         const visited = new Set();
         for (const vertex of this.vertices) {
             if (!visited.has(vertex)) {
-                if (this.dfsIterative(vertex, visited, true)) {
+                if (this.dfsIterative(vertex, visited, null, null, true)) {
                     return true;
                 }
             }
