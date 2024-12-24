@@ -3,9 +3,10 @@
 
 #pragma once
 #include <vector>
-#include <map>
 #include <stack>
 #include <set>
+#include <map>
+#include <queue>
 #include <functional>
 
 template <typename T>
@@ -30,10 +31,10 @@ public:
     DirectedAcyclicGraph();
     ~DirectedAcyclicGraph();
 
-    void addVertex();
-    void addEdge();
+    void addVertex(Vertex<T>* vertex);
+    void addEdge(Vertex<T>* source, Vertex<T>* target);
 
-    U dfsIterative(Vertex<T>* start_vertex, std::vector<Vertex<T>*>* visited=nullptr, std::function<void()>* process= nullptr, std::stack<Vertex<T>*>* record_stack=nullptr, bool detect_cycle=false);
+    U dfsIterative(Vertex<T>* start_vertex, std::set<Vertex<T>*>* visited=nullptr, std::function<void()>* process= nullptr, std::stack<Vertex<T>*>* record_stack=nullptr, bool detect_cycle=false);
 
     std::vector<Vertex<T>*> topologicalSort();
 
