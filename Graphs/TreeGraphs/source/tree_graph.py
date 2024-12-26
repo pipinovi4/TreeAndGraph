@@ -140,7 +140,8 @@ class TreeGraph:
             else:
                 current_node = None
 
-    def traversal_pre_order(self, node=None):
+    @staticmethod
+    def traversal_pre_order(node=None):
         """
         Performs a pre-order traversal of the tree. This traversal visits:
         Root -> Left child -> Right child.
