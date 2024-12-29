@@ -97,7 +97,7 @@ class TreeGraph {
 
         while (stack) {
             const current_node = stack[stack.length - 1];
-            if (current_node.children && visited[current_node] ?? false) {
+            if (current_node.children && (visited[current_node] ?? false)) {
                 for (const child of current_node.children) {
                     stack.push(child);
                 }
