@@ -140,25 +140,29 @@ class TreeGraph:
             else:
                 current_node = None
 
-    @staticmethod
-    def traversal_pre_order(node=None):
+    def traversal_pre_order(self, node=None):
         """
         Performs a pre-order traversal of the tree. This traversal visits:
         Root -> Left child -> Right child.
 
         Args:
-            node (TreeNode, optional): The starting node for traversal. Defaults to the root.
+            node (TreeNode, optional): The starting node for traversal.
         """
-        queue = deque([node])
+        if node is None:
+            node = self.root
 
-        while queue:
-            current_node = queue.popleft()
+        stack = [node]  # Initialize the stack with the root node
 
-            if current_node:
-                print(current_node.value, end=" ")
-                # Add all children to the queue to visit them in the future
-                for child in current_node.children:
-                    queue.append(child)
+        while stack:
+            current_node = stack.pop()  # Pop the last node added to the stack
+
+            # Process the current node
+            print(current_node.value, end=" ")
+
+            # Push children to the stack in reverse order
+            # This ensures left child is processed before the right child
+            for child in reversed(current_node.children):
+                stack.append(child)
 
     def traverse_post_order(self, node=None):
         """
