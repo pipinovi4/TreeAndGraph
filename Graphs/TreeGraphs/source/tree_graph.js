@@ -29,92 +29,125 @@ class TreeGraph {
     }
 
     _findNode(currentNode, value) {
-        const queue = [[currentNode]];
+        const queue = [currentNode];
 
         while (queue.length !== 0) {
-            currentNode = queue.unshift();
+            currentNode = queue.shift();  // Use shift() to dequeue the first element
             if (currentNode.value === value) {
                 return currentNode;
             }
-            for (const child of currentNode.children) {
-                queue.push(child);
+
+            if (currentNode.children) {
+                for (const child of currentNode.children) {
+                    queue.push(child);  // Enqueue children to the back of the queue
+                }
             }
         }
 
         return undefined;
     }
 
-    traversalInOrder(node=undefined) {
-        if (!node) {
-            node = this.root;
-        }
-
-        const queue = [];
-        let current_node = node;
-
-        while (current_node || queue) {
-            while (current_node) {
-                queue.push(current_node);
-                current_node = current_node.children.length !== 0 ? current_node.children[0] : undefined;
-            }
-
-            current_node = queue.pop();
-            process.stdout.write(current_node.value);
-
-            if (current_node.children.length !== 0) {
-                current_node = current_node.children > 1 ? current_node.children[1] : undefined;
-            } else {
-                current_node = undefined;
-            }
-        }
-    }
-
-    traversalPreOrder(node=undefined) {
-        const queue = [[node]];
-
-        while (queue.length !== 0) {
-            let current_node = queue.shift();
-
-            if (current_node) {
-                process.stdout.write(current_node.value);
-
-                for (const child of current_node.children) {
-                    queue.push(child);
-                }
-            }
-        }
-    }
-
-    traversalPostOrder(node=undefined) {
+    traversalInOrder(node = undefined) {
         if (!node) {
             node = this.root;
         }
 
         const stack = [];
-        const visited = {};
+        let currentNode = node;
 
-        stack.push(node);
+        while (currentNode || stack.length > 0) {
+            // Traverse to the leftmost node
+            while (currentNode) {
+                stack.push(currentNode);
+                currentNode = currentNode.children && currentNode.children.length > 0 ? currentNode.children[0] : undefined;
+            }
 
-        while (stack) {
-            const current_node = stack[stack.length - 1];
-            if (current_node.children && (visited[current_node] ?? false)) {
-                for (const child of current_node.children) {
-                    stack.push(child);
-                }
-                visited.add(current_node);
+            currentNode = stack.pop();
+
+            if (currentNode) {
+                process.stdout.write(currentNode.value + " ");  // Process the current node
+            }
+
+            // Move to the next child node (right)
+            if (currentNode && currentNode.children && currentNode.children.length > 1) {
+                currentNode = currentNode.children[1];  // Go to the second child (right in binary trees)
             } else {
-                process.stdout.write(current_node.value);
-                stack.pop();
+                currentNode = undefined;  // No more nodes to traverse at this level
             }
         }
+
+        process.stdout.write("\n");
     }
 
-    display(node=undefined, level =0) {
+    traversalPreOrder(node=undefined) {
         if (!node) {
             node = this.root;
         }
 
-        console.log(" " * level * 4 + `TreeNode(${node.value})`);
+        const queue = [node];
+
+        while (queue.length !== 0) {
+            let currentNode = queue.pop();
+
+            if (currentNode) {
+                process.stdout.write(currentNode.value + " ");
+
+                if (currentNode.children.length !== 0) {
+                    for (const child of currentNode.children) {
+                        queue.push(child);
+                    }
+                }
+            }
+        }
+
+        process.stdout.write("\n");
+    }
+
+    traversalPostOrder(node = undefined) {
+        if (!node) {
+            node = this.root;
+        }
+
+        const stack = [];
+        const visited = new Set(); // Use a Set to track visited nodes
+
+        stack.push(node);
+
+        while (stack.length > 0) {
+            const currentNode = stack[stack.length - 1]; // Peek at the top of the stack
+
+            if (currentNode.children && !visited.has(currentNode)) {
+                // Push children to the stack (in reverse order for correct post-order processing)
+                for (let i = currentNode.children.length - 1; i >= 0; i--) {
+                    stack.push(currentNode.children[i]);
+                }
+                visited.add(currentNode); // Mark the current node as visited
+            } else {
+                // Process the current node after all children
+                process.stdout.write(currentNode.value + " ");
+                stack.pop();
+            }
+        }
+
+        process.stdout.write("\n");
+    }
+
+    display(node = undefined, level = 0) {
+        const stack = [node || this.root]; // Use the root if no node is provided
+
+        while (stack.length > 0) {  // Loop while the stack has elements
+            let currentNode = stack.shift();  // Get the first element from the stack
+
+            if (!currentNode) continue;  // Skip null or undefined nodes
+
+            console.log(" ".repeat(level * 4) + `TreeNode(${currentNode.value})`);  // Indent based on the level
+
+            if (currentNode.children) {
+                for (const child of currentNode.children) {
+                    stack.push(child);  // Add children to the stack
+                }
+            }
+        }
     }
 }
 
