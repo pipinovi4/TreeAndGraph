@@ -117,3 +117,5 @@ class TreeGraph {
         console.log(" " * level * 4 + `TreeNode(${node.value})`);
     }
 }
+
+module.exports = TreeGraph;
